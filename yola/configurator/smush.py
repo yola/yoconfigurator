@@ -21,7 +21,7 @@ def config_sources(app, environment, cluster, deployconfigs_dirs, app_dir):
         ([app_dir], '%s-default' % app),
         (deployconfigs_dirs, app),
         # Application override
-        ([app_dir], '%s-overrides' % app),
+        (deployconfigs_dirs, '%s-overrides' % app),
     ]
     for dirs, name in sources:
         for directory in dirs:
