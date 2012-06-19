@@ -10,11 +10,11 @@ def config_sources(app, environment, cluster, deployconfigs_dirs, app_dir):
     environment+cluster
     '''
     sources = [
-        # Global
-        (deployconfigs_dirs, 'common'),
         # Environment + Cluster
         (deployconfigs_dirs, 'common-%s' % environment),
         (deployconfigs_dirs, 'common-%s-%s' % (environment, cluster)),
+        # Global
+        (deployconfigs_dirs, 'common'),
         # Machine-specific overrides
         (deployconfigs_dirs, 'common-overrides'),
         # Application-specific
