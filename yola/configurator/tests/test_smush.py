@@ -37,9 +37,9 @@ class TestConfigSources(unittest.TestCase):
 
     def test_source_order(self):
         sources = [
-            ('dc1', 'environment-foo'),
-            ('dc1', 'environment-foo-bar'),
             ('dc1', 'common'),
+            ('dc1', 'common-foo'),
+            ('dc1', 'common-foo-bar'),
             ('dc1', 'common-overrides'),
             ('app', 'baz-default'),
             ('dc1', 'baz'),
@@ -54,12 +54,12 @@ class TestConfigSources(unittest.TestCase):
 
     def test_multiple_deploy_config_dirs(self):
         sources = [
-            ('dc1', 'environment-foo'),
+            ('dc1', 'common-foo'),
             ('dc2', 'common-overrides')
         ]
         self.create_sources(sources)
         # An extra source that'll be overridden by dc1:
-        self.create_sources([('dc2', 'environment-foo')])
+        self.create_sources([('dc2', 'common-foo')])
 
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir, self.dc2dir],
                            self.appdir)
@@ -68,10 +68,10 @@ class TestConfigSources(unittest.TestCase):
 
     def test_override_config_dirs(self):
         sources = [
-            ('dc1', 'environment-foo'),
+            ('dc1', 'common-foo'),
         ]
         self.create_sources(sources)
-        self.create_sources([('dc2', 'environment-foo')])
+        self.create_sources([('dc2', 'common-foo')])
 
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir, self.dc2dir],
                            self.appdir)
