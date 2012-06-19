@@ -20,6 +20,8 @@ def config_sources(app, environment, cluster, deployconfigs_dirs, app_dir):
         # Application-specific
         ([app_dir], '%s-default' % app),
         (deployconfigs_dirs, app),
+        (deployconfigs_dirs, '%s-%s' % (app, environment)),
+        (deployconfigs_dirs, '%s-%s-%s' % (app, environment, cluster)),
         # Application override
         (deployconfigs_dirs, '%s-overrides' % app),
     ]
