@@ -1,8 +1,13 @@
 import imp
+import json
+import logging
 import os
 import sys
 
 from .dicts import DotDict
+
+
+log = logging.getLogger('yola.configurator.smush')
 
 
 def config_sources(app, environment, cluster, deployconfigs_dirs, app_dir):
@@ -45,9 +50,11 @@ def smush_config(sources):
 
     config = DotDict()
     for fn in sources:
+        log.debug('Merging %s', fn)
         mod_name = fake_mod + '.' + os.path.basename(fn).rsplit('.', 1)[-1]
         description = ('.py', 'r', imp.PY_SOURCE)
         with open(fn) as f:
             m = imp.load_module(mod_name, f, fn, description)
             config = m.update(config)
+        log.debug('Current config:\n%s', json.dumps(config, indent=4))
     return config
