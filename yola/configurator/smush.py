@@ -36,11 +36,16 @@ def smush_config(sources):
     '''Merge the configuration files specified, and return the resulting
     DotDict
     '''
-    if 'yola.config' not in sys.modules:
-        sys.modules['yola.config'] = imp.new_module('yola.config')
+
+    # Create a fake module that we can import the configuration-generating
+    # modules into
+    fake_mod = 'yola.configurator.configs'
+    if fake_mod not in sys.modules:
+        sys.modules[fake_mod] = imp.new_module(fake_mod)
+
     config = DotDict()
     for fn in sources:
-        mod_name = 'yola.config.' + os.path.basename(fn).rsplit('.', 1)[-1]
+        mod_name = fake_mod + '.' + os.path.basename(fn).rsplit('.', 1)[-1]
         description = ('.py', 'r', imp.PY_SOURCE)
         with open(fn) as f:
             m = imp.load_module(mod_name, f, fn, description)
