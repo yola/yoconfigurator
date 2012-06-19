@@ -43,7 +43,9 @@ class TestConfigSources(unittest.TestCase):
             ('dc1', 'common-overrides'),
             ('app', 'baz-default'),
             ('dc1', 'baz'),
-            ('app', 'baz-overrides'),
+            ('dc1', 'baz-foo'),
+            ('dc1', 'baz-foo-bar'),
+            ('dc1', 'baz-overrides'),
         ]
         self.create_sources(sources)
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir], self.appdir)
