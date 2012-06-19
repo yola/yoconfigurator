@@ -58,3 +58,9 @@ def smush_config(sources):
             config = m.update(config)
         log.debug('Current config:\n%s', json.dumps(config, indent=4))
     return config
+
+
+def write_config(config, app_dir):
+    path = os.path.join(app_dir, 'configuration.json')
+    with open(path, 'w') as f:
+        json.dump(config, f, indent=4)
