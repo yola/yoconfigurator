@@ -1,0 +1,2 @@
+# Only for tests on Python < 2.7:
+unittest2
