@@ -10,24 +10,24 @@ from .dicts import DotDict
 log = logging.getLogger('yola.configurator.smush')
 
 
-def config_sources(app, environment, cluster, deployconfigs_dirs, app_dir):
+def config_sources(app, environment, cluster, configs_dirs, app_dir):
     '''Return a list of the configuration files used by app in the specified
     environment+cluster
     '''
     sources = [
         # Environment + Cluster
-        (deployconfigs_dirs, 'common-%s' % environment),
-        (deployconfigs_dirs, 'common-%s-%s' % (environment, cluster)),
+        (configs_dirs, 'common-%s' % environment),
+        (configs_dirs, 'common-%s-%s' % (environment, cluster)),
         # Global
-        (deployconfigs_dirs, 'common'),
+        (configs_dirs, 'common'),
         # Machine-specific overrides
-        (deployconfigs_dirs, 'common-overrides'),
+        (configs_dirs, 'common-overrides'),
         # Application-specific
         ([app_dir], '%s-default' % app),
-        (deployconfigs_dirs, '%s-%s' % (app, environment)),
-        (deployconfigs_dirs, '%s-%s-%s' % (app, environment, cluster)),
+        (configs_dirs, '%s-%s' % (app, environment)),
+        (configs_dirs, '%s-%s-%s' % (app, environment, cluster)),
         # Application override
-        (deployconfigs_dirs, '%s-overrides' % app),
+        (configs_dirs, '%s-overrides' % app),
     ]
     for dirs, name in sources:
         for directory in dirs:

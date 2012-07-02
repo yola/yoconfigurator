@@ -52,7 +52,7 @@ class TestConfigSources(unittest.TestCase):
         r = self.clean_sources(r)
         self.assertEqual(r, sources)
 
-    def test_multiple_deploy_config_dirs(self):
+    def test_multiple_config_dirs(self):
         sources = [
             ('dc1', 'common-foo'),
             ('dc2', 'common-overrides')

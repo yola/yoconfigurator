@@ -10,7 +10,7 @@ if sys.version_info < (2, 7):
 
 setup(
     name='yola.configurator',
-    description='Configuration Mangling Module for DeployConfigs',
+    description='Configuration Mangling Module for Configs',
     author='Stefano Rivera',
     author_email='stefanor@yola.com',
     url='https://github.com/yola/yola.configurator',

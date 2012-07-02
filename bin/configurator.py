@@ -13,11 +13,11 @@ from yola.configurator.smush import config_sources, smush_config, write_config
 def main():
     p = argparse.ArgumentParser(
             description="Build a Yola application's configuration.json file")
-    p.add_argument('--deployconfigs-dir', '-d', metavar='DIRECTORY',
+    p.add_argument('--configs-dir', '-d', metavar='DIRECTORY',
                    action='append',
-                   help='Location of DeployConfigs. '
+                   help='Location of Configs. '
                         'Can be specified multiple times.'
-                        '(Default: /srv/deploy-configs)')
+                        '(Default: /srv/configs)')
     p.add_argument('--app-dir', '-a', metavar='DIRECTORY',
                    default='.',
                    help='Location of the application. '
@@ -42,11 +42,11 @@ def main():
     else:
         logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
-    if not options.deployconfigs_dir:
-        options.deployconfigs_dir = ['/srv/deploy-configs']
+    if not options.configs_dir:
+        options.configs_dir = ['/srv/configs']
 
     sources = config_sources(options.app, options.environment, options.cluster,
-                             options.deployconfigs_dir, options.app_dir)
+                             options.configs_dir, options.app_dir)
     config = smush_config(sources)
 
     if not options.dry_run:
