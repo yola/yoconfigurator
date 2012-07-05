@@ -1,9 +1,8 @@
-import json
 import os
 import shutil
 from tempfile import mkdtemp
 
-from yola.configurator.smush import config_sources, smush_config, write_config
+from yola.configurator.smush import config_sources, smush_config
 
 from . import unittest
 
@@ -123,18 +122,3 @@ def update(config):
 """)
         c = smush_config([a, b])
         self.assertEqual(c, {'a': 1, 'b': 2})
-
-
-class TestWriteConfig(unittest.TestCase):
-    def setUp(self):
-        self.tmpdir = mkdtemp(prefix='yola-configurator-test')
-
-    def tearDown(self):
-        shutil.rmtree(self.tmpdir)
-
-    def test_write_config(self):
-        config = {'a': 1, 'b': {'c': 2}}
-        write_config(config, self.tmpdir)
-        with open(os.path.join(self.tmpdir, 'configuration.json')) as f:
-            parsed = json.load(f)
-        self.assertEqual(config, parsed)
