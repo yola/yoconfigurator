@@ -2,7 +2,7 @@ import os
 import shutil
 from tempfile import mkdtemp
 
-from yola.configurator.smush import config_sources, smush_config
+from ..smush import config_sources, smush_config
 
 from . import unittest
 

@@ -1,4 +1,4 @@
-from yola.configurator.dicts import DotDict, MissingValue, merge_dicts
+from ..dicts import DotDict, MissingValue, merge_dicts
 
 from . import unittest
 
