@@ -42,6 +42,8 @@ class TestConfigSources(unittest.TestCase):
             ('dc1', 'common'),
             ('dc1', 'common-overrides'),
             ('app', 'baz-default'),
+            ('app', 'baz-foo'),
+            ('app', 'baz-foo-bar'),
             ('dc1', 'baz-foo'),
             ('dc1', 'baz-foo-bar'),
             ('dc1', 'baz-overrides'),

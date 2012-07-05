@@ -24,6 +24,8 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir):
         (configs_dirs, 'common-overrides'),
         # Application-specific
         ([app_dir], '%s-default' % app),
+        ([app_dir], '%s-%s' % (app, environment)),
+        ([app_dir], '%s-%s-%s' % (app, environment, cluster)),
         (configs_dirs, '%s-%s' % (app, environment)),
         (configs_dirs, '%s-%s-%s' % (app, environment, cluster)),
         # Application override
