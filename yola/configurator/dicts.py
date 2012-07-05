@@ -46,6 +46,24 @@ class DotDict(dict):
     __delattr__ = dict.__delitem__
 
 
+class MissingValue(object):
+    '''
+    A placeholder value that must be replaced before serialising to JSON.
+    Only subkey accesses can be caught by the methods below, but the JSON
+    serialiazer will fail if it finds one of these objects.
+    '''
+    def __init__(self, name):
+        self.name = name
+
+    def __getattr__(self, k):
+        raise AttributeError("No value provided for %s" % self.name)
+
+    def get(self, k, default=None):
+        raise KeyError("No value provided for %s" % self.name)
+
+    __getitem__ = get
+
+
 def merge_dicts(d1, d2):
     '''
     Merge dictionary d2 into d1, overriding entries in d1 with values from d2.

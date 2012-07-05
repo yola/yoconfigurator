@@ -1,4 +1,4 @@
-from yola.configurator.dicts import DotDict, merge_dicts
+from yola.configurator.dicts import DotDict, MissingValue, merge_dicts
 
 from . import unittest
 
@@ -51,6 +51,17 @@ class DotDictTestCase(unittest.TestCase):
         self.assertIsInstance(tree.bar, DotDict)
         tree.update([['baz', {}]])
         self.assertIsInstance(tree.baz, DotDict)
+
+
+class TestMissingValue(unittest.TestCase):
+    def test_dict_access(self):
+        d = DotDict(foo=MissingValue('foo'))
+        self.assertRaises(KeyError, d.foo.get, 'bar')
+        self.assertRaises(KeyError, lambda x: x.foo['bar'], d)
+
+    def test_attribute_access(self):
+        d = DotDict(foo=MissingValue('foo'))
+        self.assertRaises(AttributeError, lambda x: x.foo.bar, d)
 
 
 class TestMergeDicts(unittest.TestCase):
