@@ -46,8 +46,9 @@ def main():
     if not options.configs_dir:
         options.configs_dir = ['/srv/configs']
 
+    app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
     sources = config_sources(options.app, options.environment, options.cluster,
-                             options.configs_dir, options.app_dir)
+                             options.configs_dir, app_config)
     config = smush_config(sources)
 
     if not options.dry_run:
