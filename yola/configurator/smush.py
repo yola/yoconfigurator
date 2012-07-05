@@ -4,10 +4,17 @@ import logging
 import os
 import sys
 
-from .dicts import DotDict
+from .dicts import DotDict, MissingValue
 
 
 log = logging.getLogger('yola.configurator.smush')
+
+
+class LenientJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, MissingValue):
+            return '### MISSING VALUE ###'
+        return super(LenientJSONEncoder, self).default(obj)
 
 
 def config_sources(app, environment, cluster, configs_dirs, app_dir):
@@ -58,5 +65,6 @@ def smush_config(sources):
         with open(fn) as f:
             m = imp.load_module(mod_name, f, fn, description)
             config = m.update(config)
-        log.debug('Current config:\n%s', json.dumps(config, indent=4))
+        log.debug('Current config:\n%s', json.dumps(config, indent=4,
+                                                    cls=LenientJSONEncoder))
     return config

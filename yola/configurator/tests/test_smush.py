@@ -2,6 +2,7 @@ import os
 import shutil
 from tempfile import mkdtemp
 
+from ..dicts import MissingValue
 from ..smush import config_sources, smush_config
 
 from . import unittest
@@ -124,3 +125,19 @@ def update(config):
 """)
         c = smush_config([a, b])
         self.assertEqual(c, {'a': 1, 'b': 2})
+
+    def test_missing_value(self):
+        a = self.write('a.py', """
+from yola.configurator.dicts import MissingValue, merge_dicts
+
+def update(config):
+    return merge_dicts(config, {'a': MissingValue('a')})
+""")
+        b = self.write('b.py', """
+from yola.configurator.dicts import merge_dicts
+
+def update(config):
+    return merge_dicts(config, {'a': 1})
+""")
+        c = smush_config([a, b])
+        self.assertEqual(c, {'a': 1})
