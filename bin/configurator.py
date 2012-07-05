@@ -7,7 +7,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from yola.configurator.smush import config_sources, smush_config, write_config
+from yola.configurator.smush import config_sources, smush_config
+from yola.configurator.base import write_config
 
 
 def main():
