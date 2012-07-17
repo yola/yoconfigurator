@@ -3,10 +3,24 @@ import os
 import shutil
 from tempfile import mkdtemp
 
-from ..base import read_config, write_config
+from ..base import DetectMissingEncoder, read_config, write_config
 from ..dicts import merge_dicts, MissingValue
 
 from . import unittest
+
+
+class TestDetectMissingEncoder(unittest.TestCase):
+    """Not part of the public API"""
+    def test_encode(self):
+        self.assertEqual('{}', json.dumps({}, cls=DetectMissingEncoder))
+
+    def test_missing(self):
+        o = MissingValue('test')
+        self.assertRaises(ValueError, json.dumps, o, cls=DetectMissingEncoder)
+
+    def test_other(self):
+        o = object()
+        self.assertRaises(TypeError, json.dumps, o, cls=DetectMissingEncoder)
 
 
 class TestReadWriteConfig(unittest.TestCase):
