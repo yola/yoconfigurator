@@ -1,11 +1,29 @@
+import json
 import os
 import shutil
 from tempfile import mkdtemp
 
 from ..dicts import MissingValue
-from ..smush import config_sources, smush_config
+from ..smush import config_sources, smush_config, LenientJSONEncoder
 
 from . import unittest
+
+
+class TestLenientJSONEncoder(unittest.TestCase):
+    """Not part of the public API, only used in debugging, but worth testing
+    the behavior
+    """
+    def test_encode(self):
+        self.assertEqual('{}', json.dumps({}, cls=LenientJSONEncoder))
+
+    def test_missing(self):
+        expected = '"### MISSING VALUE ###"'
+        obj = MissingValue('test')
+        self.assertEqual(expected, json.dumps(obj, cls=LenientJSONEncoder))
+
+    def test_unencodable(self):
+        obj = object()
+        self.assertRaises(TypeError, json.dumps, obj, cls=LenientJSONEncoder)
 
 
 class TestConfigSources(unittest.TestCase):
