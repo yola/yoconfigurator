@@ -33,9 +33,10 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir):
         ([app_dir], '%s-default' % app),
         ([app_dir], '%s-%s' % (app, environment)),
         ([app_dir], '%s-%s-%s' % (app, environment, cluster)),
+        (configs_dirs, app),
         (configs_dirs, '%s-%s' % (app, environment)),
         (configs_dirs, '%s-%s-%s' % (app, environment, cluster)),
-        # Application override
+        # Machine-specific application override
         (configs_dirs, '%s-overrides' % app),
     ]
     for dirs, name in sources:
