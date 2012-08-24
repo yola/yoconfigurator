@@ -15,6 +15,7 @@ setup(
     author_email='stefanor@yola.com',
     url='https://github.com/yola/yola.configurator',
     version="0.1",
+    namespace_packages=['yola'],
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     install_requires=install_requires,
