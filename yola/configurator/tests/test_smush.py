@@ -106,7 +106,10 @@ class TestSmush(unittest.TestCase):
         self.tmpdir = mkdtemp(prefix='yola-configurator-test')
 
     def tearDown(self):
-        shutil.rmtree(self.tmpdir)
+        # coverage gets confused if we delete files we've imported into our
+        # namespace https://github.com/nose-devs/nose/issues/111
+        if 'NO_CLEAN_TESTS' not in os.environ:
+            shutil.rmtree(self.tmpdir)
 
     def test_nop(self):
         c = smush_config([])
