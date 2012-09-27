@@ -55,7 +55,7 @@ class TestConfigSources(unittest.TestCase):
         return [tuple(path.rsplit('.', 1)[0].rsplit('/', 2)[1:])
                 for path in sources]
 
-    def test_avialable_sources(self):
+    def test_available_sources(self):
         sources = [
             ('dc1', 'common-foo'),
         ]
