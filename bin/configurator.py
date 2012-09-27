@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
 import argparse
+import itertools
 import json
 import logging
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from yola.configurator.smush import config_sources, smush_config
+from yola.configurator.smush import (config_sources, local_config_sources,
+                                     smush_config)
 from yola.configurator.base import write_config
 
 
@@ -26,6 +28,8 @@ def main():
                         '(Default: .)')
     p.add_argument('--cluster', '-c', metavar='CLUSTER',
                    help='Deployment cluster (Default: None)')
+    p.add_argument('--local', '-l', action='store_true',
+                   help='Do a second pass, applying -local configuraiton')
     p.add_argument('--dry-run', '-n',
                    action='store_true',
                    help="Display the generated configuration, "
@@ -47,8 +51,17 @@ def main():
         options.configs_dir = ['/srv/configs']
 
     app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
+    site_config = options.configs_dir
+    if options.local:
+        site_config.insert(0, os.path.join(options.app_dir, 'deploy',
+                                           'configuration', 'local'))
+
     sources = config_sources(options.app, options.environment, options.cluster,
-                             options.configs_dir, app_config)
+                             site_config, app_config)
+    if options.local:
+        sources = itertools.chain(sources,
+                local_config_sources(options.app, site_config, app_config))
+
     config = smush_config(sources)
 
     if not options.dry_run:
