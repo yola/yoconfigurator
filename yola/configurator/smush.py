@@ -24,11 +24,11 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir):
     sources = [
         # Machine-specific
         (configs_dirs, 'hostname'),
+        # Global
+        (configs_dirs, 'common'),
         # Environment + Cluster
         (configs_dirs, 'common-%s' % environment),
         (configs_dirs, 'common-%s-%s' % (environment, cluster)),
-        # Global
-        (configs_dirs, 'common'),
         # Machine-specific overrides
         (configs_dirs, 'common-overrides'),
         # Application-specific
