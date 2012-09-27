@@ -56,9 +56,9 @@ class TestConfigSources(unittest.TestCase):
 
     def test_source_order(self):
         sources = [
+            ('dc1', 'common'),
             ('dc1', 'common-foo'),
             ('dc1', 'common-foo-bar'),
-            ('dc1', 'common'),
             ('dc1', 'common-overrides'),
             ('app', 'baz-default'),
             ('app', 'baz-foo'),
