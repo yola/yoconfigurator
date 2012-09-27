@@ -22,6 +22,8 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir):
     environment+cluster
     '''
     sources = [
+        # Machine-specific
+        (configs_dirs, 'hostname'),
         # Environment + Cluster
         (configs_dirs, 'common-%s' % environment),
         (configs_dirs, 'common-%s-%s' % (environment, cluster)),
