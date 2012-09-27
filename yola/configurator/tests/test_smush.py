@@ -4,7 +4,8 @@ import shutil
 from tempfile import mkdtemp
 
 from ..dicts import MissingValue
-from ..smush import config_sources, smush_config, LenientJSONEncoder
+from ..smush import (config_sources, local_config_sources, available_sources,
+                     smush_config, LenientJSONEncoder)
 
 from . import unittest
 
@@ -54,11 +55,26 @@ class TestConfigSources(unittest.TestCase):
         return [tuple(path.rsplit('.', 1)[0].rsplit('/', 2)[1:])
                 for path in sources]
 
-    def test_source_order(self):
+    def test_available_sources(self):
         sources = [
             ('dc1', 'common-foo'),
-            ('dc1', 'common-foo-bar'),
+        ]
+        self.create_sources(sources)
+        # An extra source that won't be present
+        all_sources = [
+            ([self.dc1dir], 'common-foo'),
+            ([self.dc1dir], 'common-foo-bar'),
+        ]
+
+        r = available_sources(all_sources)
+        r = self.clean_sources(r)
+        self.assertEqual(r, sources)
+
+    def test_source_order(self):
+        sources = [
             ('dc1', 'common'),
+            ('dc1', 'common-foo'),
+            ('dc1', 'common-foo-bar'),
             ('dc1', 'common-overrides'),
             ('app', 'baz-default'),
             ('app', 'baz-foo'),
@@ -70,6 +86,19 @@ class TestConfigSources(unittest.TestCase):
         ]
         self.create_sources(sources)
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir], self.appdir)
+        r = self.clean_sources(r)
+        self.assertEqual(r, sources)
+
+    def test_local_source_order(self):
+        sources = [
+            ('dc1', 'common-local'),
+            ('dc1', 'common-overrides'),
+            ('app', 'baz-local'),
+            ('dc1', 'baz-local'),
+            ('dc1', 'baz-overrides'),
+        ]
+        self.create_sources(sources)
+        r = local_config_sources('baz', [self.dc1dir], self.appdir)
         r = self.clean_sources(r)
         self.assertEqual(r, sources)
 
