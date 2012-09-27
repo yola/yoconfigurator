@@ -4,7 +4,8 @@ import shutil
 from tempfile import mkdtemp
 
 from ..dicts import MissingValue
-from ..smush import config_sources, smush_config, LenientJSONEncoder
+from ..smush import (config_sources, available_sources, smush_config,
+                     LenientJSONEncoder)
 
 from . import unittest
 
@@ -53,6 +54,21 @@ class TestConfigSources(unittest.TestCase):
         '''
         return [tuple(path.rsplit('.', 1)[0].rsplit('/', 2)[1:])
                 for path in sources]
+
+    def test_avialable_sources(self):
+        sources = [
+            ('dc1', 'common-foo'),
+        ]
+        self.create_sources(sources)
+        # An extra source that won't be present
+        all_sources = [
+            ([self.dc1dir], 'common-foo'),
+            ([self.dc1dir], 'common-foo-bar'),
+        ]
+
+        r = available_sources(all_sources)
+        r = self.clean_sources(r)
+        self.assertEqual(r, sources)
 
     def test_source_order(self):
         sources = [
