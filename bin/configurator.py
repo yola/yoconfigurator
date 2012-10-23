@@ -29,7 +29,7 @@ def main():
     p.add_argument('--cluster', '-c', metavar='CLUSTER',
                    help='Deployment cluster (Default: None)')
     p.add_argument('--local', '-l', action='store_true',
-                   help='Do a second pass, applying -local configuraiton')
+                   help='Do a second pass, applying -local configuration')
     p.add_argument('--dry-run', '-n',
                    action='store_true',
                    help="Display the generated configuration, "
