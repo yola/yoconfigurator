@@ -46,7 +46,7 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir):
 
 def local_config_sources(app, configs_dirs, app_dir):
     '''Return an extra list of configuration files that should be applied
-    after config_sources, when worknig locally
+    after config_sources, when working locally
     '''
     environment = 'local'
     sources = [
