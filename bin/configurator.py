@@ -19,8 +19,9 @@ def main():
     p.add_argument('--configs-dir', '-d', metavar='DIRECTORY',
                    action='append',
                    help='Location of Configs. '
-                        'Can be specified multiple times.'
-                        '(Default: /srv/configs,/etc/yola/deployconfigs/chef)')
+                        'Can be specified multiple times. '
+                        '(Default: /srv/configs, '
+                        '/etc/yola/deployconfigs/chef)')
     p.add_argument('--app-dir', '-a', metavar='DIRECTORY',
                    default='.',
                    help='Location of the application. '
