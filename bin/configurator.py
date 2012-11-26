@@ -20,7 +20,7 @@ def main():
                    action='append',
                    help='Location of Configs. '
                         'Can be specified multiple times. '
-                        '(Default: /srv/configs, '
+                        '(Default: /srv/configs/configs, '
                         '/etc/yola/deployconfigs/chef)')
     p.add_argument('--app-dir', '-a', metavar='DIRECTORY',
                    default='.',
@@ -49,7 +49,10 @@ def main():
         logging.basicConfig(level=logging.INFO, stream=sys.stderr)
 
     if not options.configs_dir:
-        options.configs_dir = ['/srv/configs', '/etc/yola/deployconfigs/chef']
+        options.configs_dir = [
+            '/srv/configs/configs',
+            '/etc/yola/deployconfigs/chef'
+        ]
 
     app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
     site_config = options.configs_dir
