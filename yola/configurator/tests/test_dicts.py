@@ -100,3 +100,29 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.a, 1)
         self.assertEqual(c.b, 2)
         self.assertEqual(c.sub.c, 2)
+
+    def test_replace_missing_with_dict(self):
+        'ensure that a subtree from B replaces a MissingValue in A'
+        a = DotDict(a=1, sub=MissingValue('sub'))
+        b = DotDict(b=2, sub={'c': 2})
+        c = merge_dicts(a, b)
+        self.assertEqual(c.a, 1)
+        self.assertEqual(c.b, 2)
+        self.assertEqual(c.sub.c, 2)
+
+    def test_merge_lists(self):
+        'ensure that leaf lists are merged'
+        a = DotDict(a=1, sub=[1, 2])
+        b = DotDict(b=2, sub=[3, 4])
+        c = merge_dicts(a, b)
+        self.assertEqual(c.a, 1)
+        self.assertEqual(c.b, 2)
+        self.assertEqual(c.sub, [1, 2, 3, 4])
+
+    def test_merge_incompatible(self):
+        'ensure that the merged items are of the same types'
+        a = DotDict(foo=42)
+        b = DotDict(foo='42')
+        self.assertRaises(TypeError, merge_dicts, a, b)
+        b = DotDict(foo={})
+        self.assertRaises(TypeError, merge_dicts, a, b)

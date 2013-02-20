@@ -75,8 +75,17 @@ def merge_dicts(d1, d2):
             if k not in d1:
                 d1[k] = v
             else:
-                if isinstance(v, dict):
+                if isinstance(d1[k], dict) and isinstance(v, dict):
                     d1[k] = merge_dicts(d1[k], v)
-                else:
+                elif isinstance(d1[k], list) and isinstance(v, list):
+                    # Lists are only supported as leaves
+                    d1[k] += v
+                elif isinstance(d1[k], MissingValue) or type(d1[k]) == type(v):
                     d1[k] = v
+                else:
+                    raise TypeError('Refusing to replace a %s with a %s'
+                                    % (type(d1[k]), type(v)))
+    else:
+        raise TypeError('Cannot merge a %s with a %s' % (type(d1), type(d2)))
+
     return d1
