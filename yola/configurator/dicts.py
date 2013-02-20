@@ -75,7 +75,7 @@ def merge_dicts(d1, d2):
             if k not in d1:
                 d1[k] = v
             else:
-                if isinstance(v, dict):
+                if isinstance(d1[k], dict) and isinstance(v, dict):
                     d1[k] = merge_dicts(d1[k], v)
                 else:
                     d1[k] = v

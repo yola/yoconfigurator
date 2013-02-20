@@ -100,3 +100,12 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.a, 1)
         self.assertEqual(c.b, 2)
         self.assertEqual(c.sub.c, 2)
+
+    def test_replace_missing_with_dict(self):
+        'ensure that a subtree from B replaces a MissingValue in A'
+        a = DotDict(a=1, sub=MissingValue('sub'))
+        b = DotDict(b=2, sub={'c': 2})
+        c = merge_dicts(a, b)
+        self.assertEqual(c.a, 1)
+        self.assertEqual(c.b, 2)
+        self.assertEqual(c.sub.c, 2)
