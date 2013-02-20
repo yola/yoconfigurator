@@ -77,6 +77,9 @@ def merge_dicts(d1, d2):
             else:
                 if isinstance(d1[k], dict) and isinstance(v, dict):
                     d1[k] = merge_dicts(d1[k], v)
+                elif isinstance(d1[k], list) and isinstance(v, list):
+                    # Lists are only supported as leaves
+                    d1[k] += v
                 else:
                     d1[k] = v
     return d1
