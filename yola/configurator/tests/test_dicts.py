@@ -118,3 +118,11 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.a, 1)
         self.assertEqual(c.b, 2)
         self.assertEqual(c.sub, [1, 2, 3, 4])
+
+    def test_merge_incompatible(self):
+        'ensure that the merged items are of the same types'
+        a = DotDict(foo=42)
+        b = DotDict(foo='42')
+        self.assertRaises(TypeError, merge_dicts, a, b)
+        b = DotDict(foo={})
+        self.assertRaises(TypeError, merge_dicts, a, b)
