@@ -70,7 +70,7 @@ def merge_dicts(d1, d2, _path=None):
 
     d1 is mutated.
 
-    _path is for internal, recursive use..
+    _path is for internal, recursive use.
     '''
     if _path is None:
         _path = ()
