@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import argparse
-import itertools
 import json
 import logging
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from yola.configurator.smush import (config_sources, local_config_sources,
-                                     smush_config)
+from yola.configurator.smush import config_sources, smush_config
 from yola.configurator.base import write_config
 
 
@@ -61,10 +59,7 @@ def main():
                                            'configuration', 'local'))
 
     sources = config_sources(options.app, options.environment, options.cluster,
-                             site_config, app_config)
-    if options.local:
-        sources = itertools.chain(sources,
-                local_config_sources(options.app, site_config, app_config))
+                             site_config, app_config, local=options.local)
 
     config = smush_config(sources)
 

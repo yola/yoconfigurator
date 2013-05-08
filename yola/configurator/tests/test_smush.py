@@ -4,8 +4,8 @@ import shutil
 from tempfile import mkdtemp
 
 from ..dicts import MissingValue
-from ..smush import (config_sources, local_config_sources, available_sources,
-                     smush_config, LenientJSONEncoder)
+from ..smush import (config_sources, available_sources, smush_config,
+                     LenientJSONEncoder)
 
 from . import unittest
 
@@ -91,14 +91,24 @@ class TestConfigSources(unittest.TestCase):
 
     def test_local_source_order(self):
         sources = [
+            ('dc1', 'common'),
+            ('dc1', 'common-foo'),
+            ('dc1', 'common-foo-bar'),
             ('dc1', 'common-local'),
             ('dc1', 'common-overrides'),
+            ('app', 'baz-default'),
+            ('app', 'baz-foo'),
+            ('app', 'baz-foo-bar'),
             ('app', 'baz-local'),
+            ('dc1', 'baz'),
+            ('dc1', 'baz-foo'),
+            ('dc1', 'baz-foo-bar'),
             ('dc1', 'baz-local'),
             ('dc1', 'baz-overrides'),
         ]
         self.create_sources(sources)
-        r = local_config_sources('baz', [self.dc1dir], self.appdir)
+        r = config_sources('baz', 'foo', 'bar', [self.dc1dir], self.appdir,
+                           local=True)
         r = self.clean_sources(r)
         self.assertEqual(r, sources)
 

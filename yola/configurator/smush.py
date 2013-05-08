@@ -17,49 +17,42 @@ class LenientJSONEncoder(json.JSONEncoder):
         return super(LenientJSONEncoder, self).default(obj)
 
 
-def config_sources(app, environment, cluster, configs_dirs, app_dir):
+def config_sources(app, environment, cluster, configs_dirs, app_dir,
+                   local=False):
     '''Return a list of the configuration files used by app in the specified
     environment+cluster
     '''
+
     sources = [
         # Machine-specific
         (configs_dirs, 'hostname'),
+        (configs_dirs, 'hostname-local'),
         # Global
         (configs_dirs, 'common'),
         # Environment + Cluster
         (configs_dirs, 'common-%s' % environment),
         (configs_dirs, 'common-%s-%s' % (environment, cluster)),
+        (configs_dirs, 'common-local'),
         # Machine-specific overrides
         (configs_dirs, 'common-overrides'),
         # Application-specific
         ([app_dir], '%s-default' % app),
         ([app_dir], '%s-%s' % (app, environment)),
         ([app_dir], '%s-%s-%s' % (app, environment, cluster)),
+        ([app_dir], '%s-local' % app),
         (configs_dirs, app),
         (configs_dirs, '%s-%s' % (app, environment)),
         (configs_dirs, '%s-%s-%s' % (app, environment, cluster)),
+        (configs_dirs, '%s-local' % app),
         # Machine-specific application override
         (configs_dirs, '%s-overrides' % app),
     ]
-    return available_sources(sources)
 
+    # Filter out local sources
+    if not local:
+        sources = [source for source in sources
+                   if not source[1].endswith('-local')]
 
-def local_config_sources(app, configs_dirs, app_dir):
-    '''Return an extra list of configuration files that should be applied
-    after config_sources, when working locally
-    '''
-    environment = 'local'
-    sources = [
-        # Environment
-        (configs_dirs, 'common-%s' % environment),
-        # Machine-specific overrides
-        (configs_dirs, 'common-overrides'),
-        # Application-specific
-        ([app_dir], '%s-%s' % (app, environment)),
-        (configs_dirs, '%s-%s' % (app, environment)),
-        # Machine-specific application override
-        (configs_dirs, '%s-overrides' % app),
-    ]
     return available_sources(sources)
 
 
