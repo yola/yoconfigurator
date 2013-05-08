@@ -171,6 +171,16 @@ def update(config):
         c = smush_config([fn])
         self.assertEqual(c, {'a': 1})
 
+    def test_initial(self):
+        fn = self.write('test.py', """
+from yola.configurator.dicts import merge_dicts
+
+def update(config):
+    return merge_dicts(config, {'a': 2})
+""")
+        c = smush_config([fn], initial={'a': 1})
+        self.assertEqual(c, {'a': 2})
+
     def test_multiple(self):
         a = self.write('a.py', """
 from yola.configurator.dicts import merge_dicts

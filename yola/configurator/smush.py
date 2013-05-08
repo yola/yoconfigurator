@@ -66,7 +66,7 @@ def available_sources(sources):
                 break
 
 
-def smush_config(sources):
+def smush_config(sources, initial=None):
     '''Merge the configuration files specified, and return the resulting
     DotDict
     '''
@@ -77,7 +77,10 @@ def smush_config(sources):
     if fake_mod not in sys.modules:
         sys.modules[fake_mod] = imp.new_module(fake_mod)
 
-    config = DotDict()
+    if initial is None:
+        initial = {}
+    config = DotDict(initial)
+
     for fn in sources:
         log.debug('Merging %s', fn)
         mod_name = fake_mod + '.' + os.path.basename(fn).rsplit('.', 1)[-1]
