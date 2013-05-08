@@ -124,7 +124,6 @@ class TestMergeDicts(unittest.TestCase):
         c = merge_dicts(a, b)
         self.assertEqual(c.foo.bar.name, 'foo.bar')
 
-
     def test_merge_lists(self):
         'ensure that leaf lists are merged'
         a = DotDict(a=1, sub=[1, 2])
