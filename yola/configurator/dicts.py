@@ -80,7 +80,10 @@ def merge_dicts(d1, d2, _path=None):
                 v.name = '.'.join(_path + (k,))
 
             if k not in d1:
-                d1[k] = v
+                if isinstance(v, dict):
+                    d1[k] = merge_dicts({}, v, _path + (k,))
+                else:
+                    d1[k] = v
             else:
                 if isinstance(d1[k], dict) and isinstance(v, dict):
                     d1[k] = merge_dicts(d1[k], v, _path + (k,))
