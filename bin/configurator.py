@@ -36,6 +36,10 @@ def main():
     p.add_argument('--verbose', '-v',
                    action='store_true',
                    help="Display the configuration at each step of merging")
+    p.add_argument('--hostname', '-H',
+                   help='Specify a hostname to refer to (only with --local). '
+                        'This gets stuffed into an attribute in the configs '
+                        'for the benefit of hostname-local.')
     p.add_argument('app', help='Application name')
     p.add_argument('environment', help='Deployment environment')
 
@@ -54,14 +58,22 @@ def main():
 
     app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
     site_config = options.configs_dir
+    initial = {}
     if options.local:
         site_config.insert(0, os.path.join(options.app_dir, 'deploy',
                                            'configuration', 'local'))
+        initial = {
+            'yola_configurator': {
+                'environment': options.environment,
+            }
+        }
+        if options.hostname:
+            initial['yola_configurator']['local_hostname'] = options.hostname
 
     sources = config_sources(options.app, options.environment, options.cluster,
                              site_config, app_config, local=options.local)
 
-    config = smush_config(sources)
+    config = smush_config(sources, initial=initial)
 
     if not options.dry_run:
         write_config(config, options.app_dir)
