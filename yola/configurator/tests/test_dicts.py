@@ -110,6 +110,21 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.b, 2)
         self.assertEqual(c.sub.c, 2)
 
+    def test_unnamed_missing_value(self):
+        'ensure that missing values get a name assigned'
+        a = DotDict()
+        b = DotDict(foo=MissingValue())
+        c = merge_dicts(a, b)
+        self.assertEqual(c.foo.name, 'foo')
+
+    def test_unnamed_missing_value_in_new_tree(self):
+        'ensure that missing values in new sub-trees get a name assigned'
+        a = DotDict()
+        b = DotDict(foo={'bar': MissingValue()})
+        c = merge_dicts(a, b)
+        self.assertEqual(c.foo.bar.name, 'foo.bar')
+
+
     def test_merge_lists(self):
         'ensure that leaf lists are merged'
         a = DotDict(a=1, sub=[1, 2])
