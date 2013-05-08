@@ -110,6 +110,13 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.b, 2)
         self.assertEqual(c.sub.c, 2)
 
+    def test_magic_missing_value(self):
+        'ensure that missing values get a name assigned'
+        a = DotDict()
+        b = DotDict(a=MissingValue())
+        c = merge_dicts(a, b)
+        self.assertEqual(c.a.name, 'a')
+
     def test_merge_lists(self):
         'ensure that leaf lists are merged'
         a = DotDict(a=1, sub=[1, 2])
