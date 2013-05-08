@@ -46,6 +46,13 @@ class DotDict(dict):
     __delattr__ = dict.__delitem__
 
 
+class DeletedValue(object):
+    '''
+    A placeholder value that results in the deletion of any existing value or
+    subtree.
+    '''
+
+
 class MissingValue(object):
     '''
     A placeholder value that must be replaced before serialising to JSON.
@@ -72,7 +79,9 @@ def merge_dicts(d1, d2):
     '''
     if isinstance(d1, dict) and isinstance(d2, dict):
         for k, v in d2.iteritems():
-            if k not in d1:
+            if isinstance(v, DeletedValue):
+                d1.pop(k, None)
+            elif k not in d1:
                 d1[k] = v
             else:
                 if isinstance(d1[k], dict) and isinstance(v, dict):

@@ -1,4 +1,4 @@
-from ..dicts import DotDict, MissingValue, merge_dicts
+from ..dicts import DotDict, MissingValue, DeletedValue, merge_dicts
 
 from . import unittest
 
@@ -126,3 +126,10 @@ class TestMergeDicts(unittest.TestCase):
         self.assertRaises(TypeError, merge_dicts, a, b)
         b = DotDict(foo={})
         self.assertRaises(TypeError, merge_dicts, a, b)
+
+    def test_deltedvalue(self):
+        'ensure that deletedvalue deletes values'
+        a = DotDict(foo=42)
+        b = DotDict(foo=DeletedValue())
+        c = merge_dicts(a, b)
+        self.assertEqual(c, {})
