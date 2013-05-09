@@ -29,7 +29,7 @@ class TestLenientJSONEncoder(unittest.TestCase):
 
 class TestConfigSources(unittest.TestCase):
     def setUp(self):
-        self.tmpdir = mkdtemp(prefix='yola-configurator-test')
+        self.tmpdir = mkdtemp(prefix='yoconfigurator-test')
         self.appdir = os.path.join(self.tmpdir, 'app')
         self.dc1dir = os.path.join(self.tmpdir, 'dc1')
         self.dc2dir = os.path.join(self.tmpdir, 'dc2')
@@ -142,7 +142,7 @@ class TestConfigSources(unittest.TestCase):
 class TestSmush(unittest.TestCase):
 
     def setUp(self):
-        self.tmpdir = mkdtemp(prefix='yola-configurator-test')
+        self.tmpdir = mkdtemp(prefix='yoconfigurator-test')
 
     def tearDown(self):
         # coverage gets confused if we delete files we've imported into our
@@ -163,7 +163,7 @@ class TestSmush(unittest.TestCase):
 
     def test_single(self):
         fn = self.write('test.py', """
-from yola.configurator.dicts import merge_dicts
+from yoconfigurator.dicts import merge_dicts
 
 def update(config):
     return merge_dicts(config, {'a': 1})
@@ -173,7 +173,7 @@ def update(config):
 
     def test_initial(self):
         fn = self.write('test.py', """
-from yola.configurator.dicts import merge_dicts
+from yoconfigurator.dicts import merge_dicts
 
 def update(config):
     return merge_dicts(config, {'a': 2})
@@ -183,13 +183,13 @@ def update(config):
 
     def test_multiple(self):
         a = self.write('a.py', """
-from yola.configurator.dicts import merge_dicts
+from yoconfigurator.dicts import merge_dicts
 
 def update(config):
     return merge_dicts(config, {'a': 1})
 """)
         b = self.write('b.py', """
-from yola.configurator.dicts import merge_dicts
+from yoconfigurator.dicts import merge_dicts
 
 def update(config):
     return merge_dicts(config, {'b': 2})
@@ -199,13 +199,13 @@ def update(config):
 
     def test_missing_value(self):
         a = self.write('a.py', """
-from yola.configurator.dicts import MissingValue, merge_dicts
+from yoconfigurator.dicts import MissingValue, merge_dicts
 
 def update(config):
     return merge_dicts(config, {'a': MissingValue('a')})
 """)
         b = self.write('b.py', """
-from yola.configurator.dicts import merge_dicts
+from yoconfigurator.dicts import merge_dicts
 
 def update(config):
     return merge_dicts(config, {'a': 1})

@@ -25,7 +25,7 @@ class TestDetectMissingEncoder(unittest.TestCase):
 
 class TestReadWriteConfig(unittest.TestCase):
     def setUp(self):
-        self.tmpdir = mkdtemp(prefix='yola-configurator-test')
+        self.tmpdir = mkdtemp(prefix='yoconfigurator-test')
 
     def tearDown(self):
         shutil.rmtree(self.tmpdir)
