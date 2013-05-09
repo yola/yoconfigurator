@@ -4,7 +4,7 @@ Change Log
 0.3.0
 -----
 
-* Renamed to yocanfigurator.
+* Renamed to yoconfigurator.
 * `MissingValues` can be replaced with dicts.
 * `MissingValues` get a name provided automatically.
 * Add `DeletedValue`.
