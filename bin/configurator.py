@@ -7,8 +7,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from yola.configurator.smush import config_sources, smush_config
-from yola.configurator.base import write_config
+from yoconfigurator.smush import config_sources, smush_config
+from yoconfigurator.base import write_config
 
 
 def main():
@@ -63,12 +63,12 @@ def main():
         site_config.insert(0, os.path.join(options.app_dir, 'deploy',
                                            'configuration', 'local'))
         initial = {
-            'yola_configurator': {
+            'yoconfigurator': {
                 'environment': options.environment,
             }
         }
         if options.hostname:
-            initial['yola_configurator']['local_hostname'] = options.hostname
+            initial['yoconfigurator']['local_hostname'] = options.hostname
 
     sources = config_sources(options.app, options.environment, options.cluster,
                              site_config, app_config, local=options.local)

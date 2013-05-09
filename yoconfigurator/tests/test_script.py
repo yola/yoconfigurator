@@ -7,7 +7,7 @@ from . import unittest
 
 class TestScript(unittest.TestCase):
     def test_help(self):
-        script_path = os.path.join(os.path.dirname(__file__), '..', '..', '..',
+        script_path = os.path.join(os.path.dirname(__file__), '..', '..',
                                    'bin', 'configurator.py')
         env = {
             'PATH': os.environ['PATH'],

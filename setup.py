@@ -9,13 +9,12 @@ if sys.version_info < (2, 7):
     install_requires.append('argparse')
 
 setup(
-    name='yola.configurator',
+    name='yoconfigurator',
     description='Configuration Mangling Module for Configs',
     author='Stefano Rivera',
     author_email='stefano.rivera@yola.com',
-    url='https://github.com/yola/yola.configurator',
-    version="0.2.2",
-    namespace_packages=['yola'],
+    url='https://github.com/yola/yoconfigurator',
+    version='0.2.2',
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     install_requires=install_requires,

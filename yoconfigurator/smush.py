@@ -7,7 +7,7 @@ import sys
 from .dicts import DotDict, MissingValue
 
 
-log = logging.getLogger('yola.configurator.smush')
+log = logging.getLogger(__name__)
 
 
 class LenientJSONEncoder(json.JSONEncoder):
@@ -73,7 +73,7 @@ def smush_config(sources, initial=None):
 
     # Create a fake module that we can import the configuration-generating
     # modules into
-    fake_mod = 'yola.configurator.configs'
+    fake_mod = '%s.configs' % __name__
     if fake_mod not in sys.modules:
         sys.modules[fake_mod] = imp.new_module(fake_mod)
 
