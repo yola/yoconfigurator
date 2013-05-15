@@ -99,10 +99,10 @@ class TestConfigSources(unittest.TestCase):
             ('app', 'baz-default'),
             ('app', 'baz-foo'),
             ('app', 'baz-foo-bar'),
-            ('app', 'baz-local'),
             ('dc1', 'baz'),
             ('dc1', 'baz-foo'),
             ('dc1', 'baz-foo-bar'),
+            ('app', 'baz-local'),
             ('dc1', 'baz-local'),
             ('dc1', 'baz-overrides'),
         ]
