@@ -64,6 +64,7 @@ def main():
                                            'configuration', 'local'))
         initial = {
             'yoconfigurator': {
+                'app': options.app,
                 'environment': options.environment,
             }
         }

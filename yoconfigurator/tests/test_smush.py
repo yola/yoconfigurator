@@ -115,11 +115,10 @@ class TestConfigSources(unittest.TestCase):
     def test_multiple_config_dirs(self):
         sources = [
             ('dc1', 'common-foo'),
+            ('dc2', 'common-foo'),
             ('dc2', 'common-overrides')
         ]
         self.create_sources(sources)
-        # An extra source that'll be overridden by dc1:
-        self.create_sources([('dc2', 'common-foo')])
 
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir, self.dc2dir],
                            self.appdir)
@@ -129,9 +128,9 @@ class TestConfigSources(unittest.TestCase):
     def test_override_config_dirs(self):
         sources = [
             ('dc1', 'common-foo'),
+            ('dc2', 'common-foo'),
         ]
         self.create_sources(sources)
-        self.create_sources([('dc2', 'common-foo')])
 
         r = config_sources('baz', 'foo', 'bar', [self.dc1dir, self.dc2dir],
                            self.appdir)
