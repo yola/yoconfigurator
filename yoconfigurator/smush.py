@@ -63,7 +63,6 @@ def available_sources(sources):
             fn = os.path.join(directory, name) + '.py'
             if os.path.isfile(fn):
                 yield fn
-                break
 
 
 def smush_config(sources, initial=None):
