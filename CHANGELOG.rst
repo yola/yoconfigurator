@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.4.0
+-----
+
+* Inject the app name as `yoconfigurator.app`.
+* Overridden configuration gets sourced too.
+
 0.3.0
 -----
 
