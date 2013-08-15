@@ -58,16 +58,15 @@ def main():
 
     app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
     site_config = options.configs_dir
-    initial = {}
+    initial = {
+        'yoconfigurator': {
+            'app': options.app,
+        },
+    }
     if options.local:
         site_config.insert(0, os.path.join(options.app_dir, 'deploy',
                                            'configuration', 'local'))
-        initial = {
-            'yoconfigurator': {
-                'app': options.app,
-                'environment': options.environment,
-            }
-        }
+        initial['yoconfigurator']['environment'] = options.environment
         if options.hostname:
             initial['yoconfigurator']['local_hostname'] = options.hostname
 
