@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.4.1
+-----
+
+* Fixes bug where generating configuration without --local resulted in missing
+  configuration values
+
 0.4.0
 -----
 

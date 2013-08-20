@@ -14,7 +14,7 @@ setup(
     author='Stefano Rivera',
     author_email='stefano.rivera@yola.com',
     url='https://github.com/yola/yoconfigurator',
-    version='0.4.0',
+    version='0.4.1',
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     install_requires=install_requires,
