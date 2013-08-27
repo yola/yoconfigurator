@@ -29,6 +29,9 @@ def main():
                    help='Deployment cluster (Default: None)')
     p.add_argument('--local', '-l', action='store_true',
                    help='Do a second pass, applying -local configuration')
+    p.add_argument('--build', '-b', action='store_true',
+                   help='Do a third pass, applying -build configuration '
+                        '(implies --local)')
     p.add_argument('--dry-run', '-n',
                    action='store_true',
                    help="Display the generated configuration, "
@@ -44,6 +47,9 @@ def main():
     p.add_argument('environment', help='Deployment environment')
 
     options = p.parse_args()
+
+    if options.build:
+        options.local = True
 
     if options.verbose:
         logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
@@ -71,7 +77,8 @@ def main():
             initial['yoconfigurator']['local_hostname'] = options.hostname
 
     sources = config_sources(options.app, options.environment, options.cluster,
-                             site_config, app_config, local=options.local)
+                             site_config, app_config, local=options.local,
+                             build=options.build)
 
     config = smush_config(sources, initial=initial)
 
