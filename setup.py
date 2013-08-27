@@ -18,4 +18,5 @@ setup(
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     install_requires=install_requires,
+    test_suite='yoconfigurator.tests',
 )
