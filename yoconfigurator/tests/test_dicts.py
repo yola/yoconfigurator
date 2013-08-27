@@ -9,7 +9,7 @@ class DotDictTestCase(unittest.TestCase):
         # Python < 2.7 compatibility:
         if not hasattr(cls, 'assertIsInstance'):
             cls.assertIsInstance = lambda self, a, b: self.assertTrue(
-                    isinstance(a, b))
+                isinstance(a, b))
 
     def test_create(self):
         'ensure that we support all dict creation methods'
