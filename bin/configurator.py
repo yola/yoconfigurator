@@ -13,7 +13,7 @@ from yoconfigurator.base import write_config
 
 def main():
     p = argparse.ArgumentParser(
-            description="Build a Yola application's configuration.json file")
+        description="Build a Yola application's configuration.json file")
     p.add_argument('--configs-dir', '-d', metavar='DIRECTORY',
                    action='append',
                    help='Location of Configs. '
