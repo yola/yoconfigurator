@@ -112,6 +112,56 @@ class TestConfigSources(unittest.TestCase):
         r = self.clean_sources(r)
         self.assertEqual(r, sources)
 
+    def test_build_source_order(self):
+        sources = [
+            ('dc1', 'common'),
+            ('dc1', 'common-foo'),
+            ('dc1', 'common-foo-bar'),
+            ('dc1', 'common-local'),
+            ('dc1', 'common-build'),
+            ('dc1', 'common-overrides'),
+            ('app', 'baz-default'),
+            ('app', 'baz-foo'),
+            ('app', 'baz-foo-bar'),
+            ('dc1', 'baz'),
+            ('dc1', 'baz-foo'),
+            ('dc1', 'baz-foo-bar'),
+            ('app', 'baz-local'),
+            ('dc1', 'baz-local'),
+            ('dc1', 'baz-build'),
+            ('dc1', 'baz-overrides'),
+        ]
+        self.create_sources(sources)
+        r = config_sources('baz', 'foo', 'bar', [self.dc1dir], self.appdir,
+                           local=True, build=True)
+        r = self.clean_sources(r)
+        self.assertEqual(r, sources)
+
+    def test_build_implies_local(self):
+        sources = [
+            ('dc1', 'common'),
+            ('dc1', 'common-foo'),
+            ('dc1', 'common-foo-bar'),
+            ('dc1', 'common-local'),
+            ('dc1', 'common-build'),
+            ('dc1', 'common-overrides'),
+            ('app', 'baz-default'),
+            ('app', 'baz-foo'),
+            ('app', 'baz-foo-bar'),
+            ('dc1', 'baz'),
+            ('dc1', 'baz-foo'),
+            ('dc1', 'baz-foo-bar'),
+            ('app', 'baz-local'),
+            ('dc1', 'baz-local'),
+            ('dc1', 'baz-build'),
+            ('dc1', 'baz-overrides'),
+        ]
+        self.create_sources(sources)
+        r = config_sources('baz', 'foo', 'bar', [self.dc1dir], self.appdir,
+                           local=False, build=True)
+        r = self.clean_sources(r)
+        self.assertEqual(r, sources)
+
     def test_multiple_config_dirs(self):
         sources = [
             ('dc1', 'common-foo'),

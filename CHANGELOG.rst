@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+0.4.2
+-----
+
+* Add --build option to produce build-time configurations for tests.
+
+0.4.1
+-----
+
+* Fixes bug where generating configuration without --local resulted in missing
+  configuration values
+
 0.4.0
 -----
 

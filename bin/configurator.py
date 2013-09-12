@@ -13,7 +13,7 @@ from yoconfigurator.base import write_config
 
 def main():
     p = argparse.ArgumentParser(
-            description="Build a Yola application's configuration.json file")
+        description="Build a Yola application's configuration.json file")
     p.add_argument('--configs-dir', '-d', metavar='DIRECTORY',
                    action='append',
                    help='Location of Configs. '
@@ -29,6 +29,9 @@ def main():
                    help='Deployment cluster (Default: None)')
     p.add_argument('--local', '-l', action='store_true',
                    help='Do a second pass, applying -local configuration')
+    p.add_argument('--build', '-b', action='store_true',
+                   help='Do a third pass, applying -build configuration '
+                        '(implies --local)')
     p.add_argument('--dry-run', '-n',
                    action='store_true',
                    help="Display the generated configuration, "
@@ -48,6 +51,9 @@ def main():
 
     options = p.parse_args()
 
+    if options.build:
+        options.local = True
+
     if options.verbose:
         logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
     else:
@@ -61,21 +67,21 @@ def main():
 
     app_config = os.path.join(options.app_dir, 'deploy', 'configuration')
     site_config = options.configs_dir
-    initial = {}
+    initial = {
+        'yoconfigurator': {
+            'app': options.app,
+        },
+    }
     if options.local:
         site_config.insert(0, os.path.join(options.app_dir, 'deploy',
                                            'configuration', 'local'))
-        initial = {
-            'yoconfigurator': {
-                'app': options.app,
-                'environment': options.environment,
-            }
-        }
+        initial['yoconfigurator']['environment'] = options.environment
         if options.hostname:
             initial['yoconfigurator']['local_hostname'] = options.hostname
 
     sources = config_sources(options.app, options.environment, options.cluster,
-                             site_config, app_config, local=options.local)
+                             site_config, app_config, local=options.local,
+                             build=options.build)
 
     config = smush_config(sources, initial=initial)
 
