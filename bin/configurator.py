@@ -33,6 +33,9 @@ def main():
                    action='store_true',
                    help="Display the generated configuration, "
                         "but don't write it.")
+    p.add_argument('--templates', '-t',
+                   action='store_true',
+                   help="Render the application templates")
     p.add_argument('--verbose', '-v',
                    action='store_true',
                    help="Display the configuration at each step of merging")
@@ -75,6 +78,23 @@ def main():
                              site_config, app_config, local=options.local)
 
     config = smush_config(sources, initial=initial)
+
+    import tempita
+    if options.templates:
+        app_template_dir = os.path.join(os.environ['YOLA_SRC'], options.app, 'deploy', 'templates')
+        print app_template_dir
+        for root, dirs, files in os.walk(app_template_dir):
+            print root, "\n", dirs, "\n", files, "\n"
+            for f in files:
+                if f.endswith('.template'):
+                    tmpl = tempita.Template.from_filename(os.path.join(root, f))
+
+                    output = tmpl.substitute(conf=config,
+                                             aconf=config.get(options.app, {}),
+                                             cconf=config.get('common', {}))
+                    print output
+        #with open(destination, 'w') as f:
+        #    f.write(output)
 
     if not options.dry_run:
         write_config(config, options.app_dir)
