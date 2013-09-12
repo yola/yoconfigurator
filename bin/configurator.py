@@ -88,19 +88,22 @@ def main():
     import tempita
     if options.templates:
         app_template_dir = os.path.join(os.environ['YOLA_SRC'], options.app, 'deploy', 'templates')
-        print app_template_dir
         for root, dirs, files in os.walk(app_template_dir):
-            print root, "\n", dirs, "\n", files, "\n"
             for f in files:
                 if f.endswith('.template'):
-                    tmpl = tempita.Template.from_filename(os.path.join(root, f))
+                    src_file = os.path.join(root, f)
+                    dst_file = os.path.join(root, f).replace(app_template_dir, '').lstrip('/')
+                    dst_file = os.path.join('rendered_templates', dst_file)
+                    print "Rendering template %s -> %s" % (src_file, dst_file)
+                    tmpl = tempita.Template.from_filename(src_file)
 
                     output = tmpl.substitute(conf=config,
                                              aconf=config.get(options.app, {}),
                                              cconf=config.get('common', {}))
-                    print output
-        #with open(destination, 'w') as f:
-        #    f.write(output)
+                    os.makedirs(os.path.dirname(dst_file))
+
+                    with open(dst_file, 'w') as f:
+                        f.write(output)
 
     if not options.dry_run:
         write_config(config, options.app_dir)
