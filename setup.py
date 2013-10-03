@@ -10,9 +10,10 @@ if sys.version_info < (2, 7):
 
 setup(
     name='yoconfigurator',
-    description='Configuration Mangling Module for Configs',
-    author='Stefano Rivera',
-    author_email='stefano.rivera@yola.com',
+    description='Build configuration for deployable apps',
+    author='Yola',
+    author_email='engineers@yola.com',
+    license='MIT (Expat)',
     url='https://github.com/yola/yoconfigurator',
     version='0.4.2',
     packages=find_packages(),
