@@ -13,6 +13,7 @@ setup(
     description='Configuration Mangling Module for Configs',
     author='Stefano Rivera',
     author_email='stefano.rivera@yola.com',
+    license='MIT (Expat)',
     url='https://github.com/yola/yoconfigurator',
     version='0.4.2',
     packages=find_packages(),
