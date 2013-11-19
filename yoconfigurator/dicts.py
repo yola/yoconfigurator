@@ -99,7 +99,11 @@ def merge_dicts(d1, d2, _path=None):
                 elif isinstance(d1[k], list) and isinstance(v, list):
                     # Lists are only supported as leaves
                     d1[k] += v
-                elif isinstance(d1[k], MissingValue) or type(d1[k]) == type(v):
+                elif isinstance(d1[k], MissingValue):
+                    d1[k] = v
+                elif d1[k] is None:
+                    d1[k] = v
+                elif type(d1[k]) == type(v):
                     d1[k] = v
                 else:
                     raise TypeError('Refusing to replace a %s with a %s'

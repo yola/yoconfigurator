@@ -141,6 +141,13 @@ class TestMergeDicts(unittest.TestCase):
         b = DotDict(foo={})
         self.assertRaises(TypeError, merge_dicts, a, b)
 
+    def test_replace_none(self):
+        'ensure that None can be replaced with another type'
+        a = DotDict(foo=None)
+        b = DotDict(foo='foo')
+        c = merge_dicts(a, b)
+        self.assertEqual(c, {'foo': 'foo'})
+
     def test_deltedvalue(self):
         'ensure that deletedvalue deletes values'
         a = DotDict(foo=42)
