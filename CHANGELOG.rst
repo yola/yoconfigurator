@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.4.3
+-----
+
+* Allow replacing `None` with other types.
+
 0.4.2
 -----
 
