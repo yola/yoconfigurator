@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+0.4.4
+-----
+
+* Fix a bug in the DotDict __getattr__ method so it fails with an
+  AttributeError if the attr is not found. This arose because, during a
+  deepcopy, the getattr was mapped to dict.getitem and dict does not have
+  a __deepcopy__ attribute
+
 0.4.3
 -----
 
