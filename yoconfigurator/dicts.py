@@ -18,6 +18,11 @@ class DotDict(dict):
         value = self._convert_item(value)
         super(DotDict, self).__setitem__(key, value)
 
+    def __getattr__(self, attr):
+        if attr in self:
+            return self[attr]
+        raise AttributeError
+
     def setdefault(self, key, default=None):
         default = self._convert_item(default)
         super(DotDict, self).setdefault(key, default)
@@ -42,7 +47,6 @@ class DotDict(dict):
         return obj
 
     __setattr__ = __setitem__
-    __getattr__ = dict.__getitem__
     __delattr__ = dict.__delitem__
 
 
