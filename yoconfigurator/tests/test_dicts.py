@@ -1,3 +1,5 @@
+import copy
+
 from ..dicts import DotDict, MissingValue, DeletedValue, merge_dicts
 
 from . import unittest
@@ -51,6 +53,11 @@ class DotDictTestCase(unittest.TestCase):
         self.assertIsInstance(tree.bar, DotDict)
         tree.update([['baz', {}]])
         self.assertIsInstance(tree.baz, DotDict)
+
+    def test_deepcopy(self):
+        'ensure that DotDict can be deepcopied'
+        tree = DotDict({'foo': 'bar'})
+        self.assertEqual(tree, copy.deepcopy(tree))
 
 
 class TestMissingValue(unittest.TestCase):
