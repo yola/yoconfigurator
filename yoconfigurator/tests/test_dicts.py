@@ -57,11 +57,7 @@ class DotDictTestCase(unittest.TestCase):
     def test_deepcopy(self):
         'ensure that DotDict can be deepcopied'
         tree = DotDict({'foo': 'bar'})
-
-        try:
-            copy.deepcopy(tree)
-        except:
-            self.fail('DotDict cannot be deepcopied')
+        self.assertEqual(tree, copy.deepcopy(tree))
 
 
 class TestMissingValue(unittest.TestCase):
