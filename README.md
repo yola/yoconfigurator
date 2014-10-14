@@ -1,5 +1,8 @@
 # yoconfigurator
 
+[![Build Status](https://api.travis-ci.org/yola/yoconfigurator.svg)](https://travis-ci.org/yola/yoconfigurator)
+
+
 Combine configuration from multiple sources into a single JSON file.
 This allows cluster and environment configuration to override defaults
 from the application.
