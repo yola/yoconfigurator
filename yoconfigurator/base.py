@@ -14,7 +14,7 @@ class DetectMissingEncoder(json.JSONEncoder):
 def write_config(config, app_dir):
     path = os.path.join(app_dir, 'configuration.json')
     with open(path, 'w') as f:
-        json.dump(config, f, indent=4, cls=DetectMissingEncoder)
+        json.dump(config, f, indent=4, cls=DetectMissingEncoder, separators=(',', ': '))
 
 
 def read_config(app_dir):

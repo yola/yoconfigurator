@@ -15,7 +15,7 @@ setup(
     author_email='engineers@yola.com',
     license='MIT (Expat)',
     url='https://github.com/yola/yoconfigurator',
-    version='0.4.4',
+    version='0.4.5',
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     install_requires=install_requires,
