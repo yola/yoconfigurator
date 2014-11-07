@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.4.5
+-----
+
+* Generated configuration.json no longer has trailing whitespace.
+
 0.4.4
 -----
 

@@ -85,7 +85,7 @@ def main():
     if not options.dry_run:
         write_config(config, options.app_dir)
     else:
-        json.dump(config, sys.stdout, indent=4)
+        json.dump(config, sys.stdout, indent=4, separators=(',', ': '))
 
 
 if __name__ == '__main__':
