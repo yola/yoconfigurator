@@ -19,7 +19,7 @@ from the application.
 2. Run tests:
 
   ```
-  python -m unittest -v yoconfigurator.tests
+  python -m unittest discover
   ```
 
 
