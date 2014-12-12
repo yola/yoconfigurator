@@ -59,6 +59,16 @@ class DotDictTestCase(unittest.TestCase):
         tree = DotDict({'foo': 'bar'})
         self.assertEqual(tree, copy.deepcopy(tree))
 
+    def test_get_dotted(self):
+        'ensure that DotDict can get values using a dotted key'
+        tree = DotDict({'foo': {'bar': {'baz': 'huzzah'}}})
+        self.assertEqual(tree['foo.bar.baz'], 'huzzah')
+
+    def test_set_dotted(self):
+        'ensure that DotDict can get set values using a dotted key'
+        tree = DotDict()
+        tree['foo.bar.baz'] = 'huzzah'
+        self.assertEqual(tree['foo.bar.baz'], 'huzzah')
 
 class TestMissingValue(unittest.TestCase):
     def test_dict_access(self):

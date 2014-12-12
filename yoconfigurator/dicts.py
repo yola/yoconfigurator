@@ -14,14 +14,25 @@ class DotDict(dict):
         for key, value in self.iteritems():
             self[key] = self._convert_item(value)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, dottedkey, value):
         value = self._convert_item(value)
-        super(DotDict, self).__setitem__(key, value)
+        if '.' not in dottedkey:
+            return super(DotDict, self).__setitem__(dottedkey, value)
+        key, dottedkey = dottedkey.split('.', 1)
+        target = self[key] = self.get(key, DotDict())
+        target[dottedkey] = value
 
     def __getattr__(self, attr):
         if attr in self:
             return self[attr]
         raise AttributeError
+
+    def __getitem__(self, dottedkey):
+        if '.' not in dottedkey:
+            return super(DotDict, self).__getitem__(dottedkey)
+        key, dottedkey = dottedkey.split('.', 1)
+        target = super(DotDict, self).__getitem__(key)
+        return target[dottedkey]
 
     def setdefault(self, key, default=None):
         default = self._convert_item(default)
