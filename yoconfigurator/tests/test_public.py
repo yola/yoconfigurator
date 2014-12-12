@@ -38,20 +38,20 @@ class TestPublicConfiguration(unittest.TestCase):
 
     def test_looks_as_expected(self):
         expected = {
-            "myapp": {
-                "some": {
-                    "deeply": {
-                        "nested": {
-                            "value": "Stefano likes beer"
+            'myapp': {
+                'some': {
+                    'deeply': {
+                        'nested': {
+                            'value': 'Stefano likes beer'
                         }
                     }
                 },
-                "hello": "world",
-                "oz": {
-                    "bears": True,
-                    "tigers": True,
-                    "lions": True,
-                    "zebras": False,
+                'hello': 'world',
+                'oz': {
+                    'bears': True,
+                    'tigers': True,
+                    'lions': True,
+                    'zebras': False,
                 }
             }
         }
