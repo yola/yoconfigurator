@@ -7,6 +7,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from yoconfigurator.public import get_public_config
 from yoconfigurator.smush import config_sources, smush_config
 from yoconfigurator.base import write_config
 
@@ -81,9 +82,11 @@ def main():
                              build=options.build)
 
     config = smush_config(sources, initial=initial)
+    pub_config = get_public_config(config, app_config, options.app)
 
     if not options.dry_run:
         write_config(config, options.app_dir)
+        write_config(pub_config, options.app_dir, 'configuration_public.json')
     else:
         json.dump(config, sys.stdout, indent=4, separators=(',', ': '))
 
