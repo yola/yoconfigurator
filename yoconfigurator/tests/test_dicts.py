@@ -65,7 +65,7 @@ class DotDictTestCase(unittest.TestCase):
         self.assertEqual(tree['foo.bar.baz'], 'huzzah')
 
     def test_set_dotted(self):
-        'ensure that DotDict can get set values using a dotted key'
+        'ensure that DotDict can set values using a dotted key'
         tree = DotDict()
         tree['foo.bar.baz'] = 'huzzah'
         self.assertEqual(tree['foo.bar.baz'], 'huzzah')
