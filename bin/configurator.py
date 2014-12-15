@@ -85,8 +85,7 @@ def main():
     pub_config = get_public_config(config, app_config, options.app)
 
     if not options.dry_run:
-        write_config(config, options.app_dir)
-        write_config(pub_config, options.app_dir, 'configuration_public.json')
+        write_config(options.app_dir, config, pub_config)
     else:
         json.dump(config, sys.stdout, indent=4, separators=(',', ': '))
 
