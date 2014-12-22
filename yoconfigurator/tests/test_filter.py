@@ -6,10 +6,10 @@ import sys
 from yoconfigurator.tests import unittest
 
 
-class TestPublicConfiguration(unittest.TestCase):
+class TestFilter(unittest.TestCase):
 
     def setUp(self):
-        """Call configurator in the public config sample app."""
+        """Call configurator in the sample app with a public config filter."""
         tests_dir = os.path.dirname(__file__)
         bin_dir = script_path = os.path.join(tests_dir, '..', '..', 'bin')
         script_path = os.path.join(bin_dir, 'configurator.py')
@@ -33,10 +33,10 @@ class TestPublicConfiguration(unittest.TestCase):
         os.remove(self.pub_conf)
         os.remove(os.path.join(self.app_dir, 'configuration.json'))
 
-    def test_is_created(self):
+    def test_creates_a_filtered_config(self):
         self.assertTrue(os.path.isfile(self.pub_conf))
 
-    def test_looks_as_expected(self):
+    def test_creates_a_filtered_config_that_looks_as_expected(self):
         expected = {
             'myapp': {
                 'some': {
@@ -59,7 +59,7 @@ class TestPublicConfiguration(unittest.TestCase):
             written = json.load(f)
         self.assertEqual(expected, written)
 
-    def test_does_not_contain_a_secret(self):
+    def test_creates_a_filtered_config_that_does_not_contain_a_secret(self):
         with open(self.pub_conf) as f:
             written = json.load(f)
         self.assertNotIn('secret', written)

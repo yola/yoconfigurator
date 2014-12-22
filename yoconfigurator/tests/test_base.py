@@ -3,7 +3,7 @@ import os
 import shutil
 from tempfile import mkdtemp
 
-from ..base import DetectMissingEncoder, read_config, write_config
+from ..base import DetectMissingEncoder, read_config, write_configs
 from ..dicts import merge_dicts, MissingValue
 
 from . import unittest
@@ -37,27 +37,33 @@ class TestReadWriteConfig(unittest.TestCase):
         parsed = read_config(self.tmpdir)
         self.assertEqual(config, parsed)
 
-    def test_write_config(self):
+    def test_write_single_config(self):
         config = {'a': 1, 'b': {'c': 2}}
-        write_config(self.tmpdir, config)
+        configs = [(config, 'configuration.json')]
+        write_configs(self.tmpdir, configs)
         with open(os.path.join(self.tmpdir, 'configuration.json'), 'r') as f:
             parsed = json.load(f)
         self.assertEqual(config, parsed)
 
-    def test_write_public_config(self):
-        config = {'a': 1, 'b': {'c': 2}}
-        pub_config = {'x': -1, 'y': {'z': -2}}
-        write_config(self.tmpdir, config, pub_config)
-        pub_conf_fn = os.path.join(self.tmpdir, 'configuration_public.json')
-        with open(pub_conf_fn) as f:
+    def test_write_multiple_configs(self):
+        config_a = {'a': 1, 'b': {'c': 2}}
+        config_b = {'x': -1, 'y': {'z': -2}}
+        configs = [
+            (config_a, 'config-a.json'),
+            (config_b, 'config-b.json')]
+        write_configs(self.tmpdir, configs)
+        second_conf_fn = os.path.join(self.tmpdir, 'config-b.json')
+        with open(second_conf_fn) as f:
             parsed = json.load(f)
-        self.assertEqual(pub_config, parsed)
+        self.assertEqual(config_b, parsed)
 
     def test_missing_value(self):
         config = {'a': 1, 'b': MissingValue('b')}
-        self.assertRaises(ValueError, write_config, self.tmpdir, config)
+        configs = [(config, 'config.json')]
+        self.assertRaises(ValueError, write_configs, self.tmpdir, configs)
 
     def test_substituted_missing_value(self):
         config = {'a': 1, 'b': MissingValue('b')}
         config = merge_dicts(config, {'b': 2})
-        write_config(self.tmpdir, config)
+        configs = [(config, 'config.json')]
+        write_configs(self.tmpdir, configs)
