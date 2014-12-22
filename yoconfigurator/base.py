@@ -35,7 +35,7 @@ def read_config(app_dir):
 
 
 def get_config_module(config_pathname):
-    """Imports the config file to yoconfigurator.configs.<module_name>."""
+    """Imports the config file to yoconfigurator.configs.<config_basename>."""
     configs_mod = 'yoconfigurator.configs'
     if configs_mod not in sys.modules:
         sys.modules[configs_mod] = imp.new_module(configs_mod)
