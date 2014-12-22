@@ -22,10 +22,9 @@ def _write(content, name):
 
 def write_configs(app_dir, configs):
     """Write configurations to the applicaiton directory."""
-    for config in configs:
-        content = config[0]
-        name = os.path.join(app_dir, config[1])
-        _write(content, name)
+    for content, filename in configs:
+        pathname = os.path.join(app_dir, filename)
+        _write(content, pathname)
 
 
 def read_config(app_dir):
