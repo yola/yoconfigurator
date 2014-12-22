@@ -20,7 +20,7 @@ def _write(content, name):
             separators=(',', ': '))
 
 
-def write_configs(app_dir, configs):
+def write_configs(configs, app_dir):
     """Write configurations to the applicaiton directory."""
     for content, filename in configs:
         pathname = os.path.join(app_dir, filename)

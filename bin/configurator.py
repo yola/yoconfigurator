@@ -90,7 +90,7 @@ def main():
         configs.append((pub_config, 'configuration_public.json'))
 
     if not options.dry_run:
-        write_configs(options.app_dir, configs)
+        write_configs(configs, options.app_dir)
     else:
         json.dump(config, sys.stdout, indent=4, separators=(',', ': '))
 

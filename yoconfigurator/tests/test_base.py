@@ -40,7 +40,7 @@ class TestReadWriteConfig(unittest.TestCase):
     def test_write_single_config(self):
         config = {'a': 1, 'b': {'c': 2}}
         configs = [(config, 'configuration.json')]
-        write_configs(self.tmpdir, configs)
+        write_configs(configs, self.tmpdir)
         with open(os.path.join(self.tmpdir, 'configuration.json'), 'r') as f:
             parsed = json.load(f)
         self.assertEqual(config, parsed)
@@ -51,7 +51,7 @@ class TestReadWriteConfig(unittest.TestCase):
         configs = [
             (config_a, 'config-a.json'),
             (config_b, 'config-b.json')]
-        write_configs(self.tmpdir, configs)
+        write_configs(configs, self.tmpdir)
         second_conf_fn = os.path.join(self.tmpdir, 'config-b.json')
         with open(second_conf_fn) as f:
             parsed = json.load(f)
@@ -60,10 +60,10 @@ class TestReadWriteConfig(unittest.TestCase):
     def test_missing_value(self):
         config = {'a': 1, 'b': MissingValue('b')}
         configs = [(config, 'config.json')]
-        self.assertRaises(ValueError, write_configs, self.tmpdir, configs)
+        self.assertRaises(ValueError, write_configs, configs, self.tmpdir)
 
     def test_substituted_missing_value(self):
         config = {'a': 1, 'b': MissingValue('b')}
         config = merge_dicts(config, {'b': 2})
         configs = [(config, 'config.json')]
-        write_configs(self.tmpdir, configs)
+        write_configs(configs, self.tmpdir)
