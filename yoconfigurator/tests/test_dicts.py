@@ -1,8 +1,8 @@
 import copy
 
-from ..dicts import DotDict, MissingValue, DeletedValue, merge_dicts
-
-from . import unittest
+from yoconfigurator.dicts import (DeletedValue, DotDict, MissingValue,
+                                  filter_dict, merge_dicts)
+from yoconfigurator.tests import unittest
 
 
 class DotDictTestCase(unittest.TestCase):
@@ -90,6 +90,13 @@ class TestMergeDicts(unittest.TestCase):
         self.assertEqual(c.a, 1)
         self.assertEqual(c.b, 1)
         self.assertEqual(c.c, 1)
+
+    def test_filter(self):
+        'ensure that the subset of A is filtered out using keys'
+        a = DotDict(a=1, b=1)
+        keys = ['a']
+        b = filter_dict(a, keys)
+        self.assertEqual(b, {'a': 1})
 
     def test_replacement(self):
         'ensure that the new entries in B replace equivalents in A'

@@ -34,10 +34,11 @@ def read_config(app_dir):
         return DotDict(json.load(f))
 
 
-def get_config_module(module_name, config_pathname):
+def get_config_module(config_pathname):
     """Imports the config file to yoconfigurator.configs.<module_name>."""
     configs_mod = 'yoconfigurator.configs'
     if configs_mod not in sys.modules:
         sys.modules[configs_mod] = imp.new_module(configs_mod)
+    module_name = os.path.basename(config_pathname).rsplit('.', 1)[-1]
     module_name = configs_mod + '.' + module_name
     return imp.load_source(module_name, config_pathname)

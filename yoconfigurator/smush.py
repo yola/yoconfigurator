@@ -83,8 +83,7 @@ def smush_config(sources, initial=None):
 
     for fn in sources:
         log.debug('Merging %s', fn)
-        mod_name = os.path.basename(fn).rsplit('.', 1)[-1]
-        mod = get_config_module(mod_name, fn)
+        mod = get_config_module(fn)
         config = mod.update(config)
         log.debug('Current config:\n%s', json.dumps(config, indent=4,
                                                     cls=LenientJSONEncoder))

@@ -1,6 +1,6 @@
 """A configration filter for public data."""
 
-from yoconfigurator.dicts import DotDict
+from yoconfigurator.dicts import filter_dict
 
 
 def filter(config):
@@ -10,7 +10,4 @@ def filter(config):
         "myapp.some.deeply.nested.value",
         "myapp.oz"
     ]
-    public_config = DotDict()
-    for key in keys:
-        public_config[key] = config[key]
-    return public_config
+    return filter_dict(config, keys)

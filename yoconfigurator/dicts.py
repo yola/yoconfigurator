@@ -127,3 +127,11 @@ def merge_dicts(d1, d2, _path=None):
         raise TypeError('Cannot merge a %s with a %s' % (type(d1), type(d2)))
 
     return d1
+
+
+def filter_dict(unfiltered, filter_keys):
+    '''Return a subset of a dictionary using the specified keys.'''
+    filtered = DotDict()
+    for k in filter_keys:
+        filtered[k] = unfiltered[k]
+    return filtered
