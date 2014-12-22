@@ -2,9 +2,9 @@ import imp
 import json
 import logging
 import os
-import sys
 
-from .dicts import DotDict, MissingValue
+from yoconfigurator.base import get_config_module
+from yoconfigurator.dicts import DotDict, MissingValue
 
 
 log = logging.getLogger(__name__)
@@ -77,24 +77,15 @@ def smush_config(sources, initial=None):
     '''Merge the configuration files specified, and return the resulting
     DotDict
     '''
-
-    # Create a fake module that we can import the configuration-generating
-    # modules into
-    fake_mod = '%s.configs' % __name__
-    if fake_mod not in sys.modules:
-        sys.modules[fake_mod] = imp.new_module(fake_mod)
-
     if initial is None:
         initial = {}
     config = DotDict(initial)
 
     for fn in sources:
         log.debug('Merging %s', fn)
-        mod_name = fake_mod + '.' + os.path.basename(fn).rsplit('.', 1)[-1]
-        description = ('.py', 'r', imp.PY_SOURCE)
-        with open(fn) as f:
-            m = imp.load_module(mod_name, f, fn, description)
-            config = m.update(config)
+        mod_name = os.path.basename(fn).rsplit('.', 1)[-1]
+        mod = get_config_module(mod_name, fn)
+        config = mod.update(config)
         log.debug('Current config:\n%s', json.dumps(config, indent=4,
                                                     cls=LenientJSONEncoder))
     return config

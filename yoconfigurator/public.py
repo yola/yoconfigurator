@@ -1,16 +1,16 @@
 """Contains methods for creating creating public configuration."""
-import imp
 import os
 
+from yoconfigurator.base import get_config_module
 from yoconfigurator.dicts import DotDict
 
 
-def read_public_data_config(fn):
+def read_public_data_config(pathname):
     """Return the config keys to be published as public."""
-    if not os.path.isfile(fn):
+    if not os.path.isfile(pathname):
         return []
-    m = imp.load_source('public-config', fn)
-    return m.public_data
+    config_module = get_config_module('public-config', pathname)
+    return config_module.public_data()
 
 
 def get_public_config(config, app_config_dir, app_name):
