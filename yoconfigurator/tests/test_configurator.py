@@ -32,7 +32,7 @@ class TestConfigurator(unittest.TestCase):
 
     def tearDown(self):
         os.remove(self.pub_conf)
-        os.remove(os.path.join(self.app_dir, 'configuration.json'))
+        os.remove(self.conf)
 
     def test_creates_a_config_json(self):
         self.assertTrue(os.path.isfile(self.conf))
