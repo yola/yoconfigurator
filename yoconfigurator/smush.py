@@ -19,10 +19,7 @@ class LenientJSONEncoder(json.JSONEncoder):
 
 def config_sources(app, environment, cluster, configs_dirs, app_dir,
                    local=False, build=False):
-    '''Return a list of the configuration files used by app in the specified
-    environment+cluster
-    '''
-
+    """Return the config files for an environment & cluster specific app."""
     sources = [
         # Machine-specific
         (configs_dirs, 'hostname'),
@@ -65,7 +62,7 @@ def config_sources(app, environment, cluster, configs_dirs, app_dir,
 
 
 def available_sources(sources):
-    '''Yield the sources that are present'''
+    """Yield the sources that are present."""
     for dirs, name in sources:
         for directory in dirs:
             fn = os.path.join(directory, name) + '.py'
@@ -74,9 +71,7 @@ def available_sources(sources):
 
 
 def smush_config(sources, initial=None):
-    '''Merge the configuration files specified, and return the resulting
-    DotDict
-    '''
+    """Merge the configuration sources and return the resulting DotDict."""
     if initial is None:
         initial = {}
     config = DotDict(initial)
