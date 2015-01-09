@@ -70,6 +70,7 @@ class DotDictTestCase(unittest.TestCase):
         tree['foo.bar.baz'] = 'huzzah'
         self.assertEqual(tree['foo.bar.baz'], 'huzzah')
 
+
 class TestMissingValue(unittest.TestCase):
     def test_dict_access(self):
         d = DotDict(foo=MissingValue('foo'))
