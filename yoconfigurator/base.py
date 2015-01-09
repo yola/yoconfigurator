@@ -13,18 +13,13 @@ class DetectMissingEncoder(json.JSONEncoder):
         return super(DetectMissingEncoder, self).default(obj)
 
 
-def _write(content, name):
-    with open(name, 'w') as f:
+def write_config(config, app_dir, filename='configuration.json'):
+    """Write configuration to the applicaiton directory."""
+    path = os.path.join(app_dir, filename)
+    with open(path, 'w') as f:
         json.dump(
-            content, f, indent=2, cls=DetectMissingEncoder,
+            config, f, indent=4, cls=DetectMissingEncoder,
             separators=(',', ': '))
-
-
-def write_configs(configs, app_dir):
-    """Write configurations to the applicaiton directory."""
-    for content, filename in configs:
-        pathname = os.path.join(app_dir, filename)
-        _write(content, pathname)
 
 
 def read_config(app_dir):
