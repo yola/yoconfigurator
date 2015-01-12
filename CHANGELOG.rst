@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+0.4.6
+-----
+
+* Add new lib for configuration filtering
+* Add support and docs for generating public configuration.
+* Add DotDict support for getting & setting values using dotted keys
+
 0.4.5
 -----
 
