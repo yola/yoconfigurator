@@ -7,6 +7,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from yoconfigurator.filter import filter_config
 from yoconfigurator.smush import config_sources, smush_config
 from yoconfigurator.base import write_config
 
@@ -81,12 +82,16 @@ def main():
                              build=options.build)
 
     config = smush_config(sources, initial=initial)
+    public_filter_pathname = os.path.join(app_config, 'public-data.py')
+    pub_config = filter_config(config, public_filter_pathname)
 
-    if not options.dry_run:
-        write_config(config, options.app_dir)
-    else:
+    if options.dry_run:
         json.dump(config, sys.stdout, indent=4, separators=(',', ': '))
+        return
 
+    write_config(config, options.app_dir)
+    if pub_config:
+        write_config(pub_config, options.app_dir, 'configuration_public.json')
 
 if __name__ == '__main__':
     main()

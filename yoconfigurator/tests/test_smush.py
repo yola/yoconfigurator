@@ -11,9 +11,13 @@ from . import unittest
 
 
 class TestLenientJSONEncoder(unittest.TestCase):
-    """Not part of the public API, only used in debugging, but worth testing
+
+    """Tests for LenientJSONEncoder.
+
+    Not a part of the public API, only used in debugging, but worth testing
     the behavior
     """
+
     def test_encode(self):
         self.assertEqual('{}', json.dumps({}, cls=LenientJSONEncoder))
 
@@ -49,9 +53,10 @@ class TestConfigSources(unittest.TestCase):
             self.touch(os.path.join(source[0], source[1] + '.py'))
 
     def clean_sources(self, sources):
-        '''Convert a config_sources result into a create_sources list
+        """Convert a config_sources result into a create_sources list.
+
         i.e. the last two path components, minus a file extension
-        '''
+        """
         return [tuple(path.rsplit('.', 1)[0].rsplit('/', 2)[1:])
                 for path in sources]
 
@@ -204,7 +209,7 @@ class TestSmush(unittest.TestCase):
         self.assertEqual(c, {})
 
     def write(self, name, contents):
-        '''Write contents to tmpdir/name. Return full filename'''
+        """Write contents to tmpdir/name. Return full filename."""
         fn = os.path.join(self.tmpdir, name)
         with open(fn, 'w') as f:
             f.write(contents)

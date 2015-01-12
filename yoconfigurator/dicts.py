@@ -1,27 +1,42 @@
+"""Module for DotDict data structure and DotDict helpers."""
+
+
 class DotDict(dict):
-    '''
-    A dictionary with attribute access
+
+    """
+    A dictionary with attribute access.
 
     On creation/assignment, child dicts and list-of-dicts will be converted to
     DotDict.
 
     This is a cleaner way to read a dict in the templates
     instead of using dict['field'], can now use dict.field
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
         super(DotDict, self).__init__(*args, **kwargs)
         for key, value in self.iteritems():
             self[key] = self._convert_item(value)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, dottedkey, value):
         value = self._convert_item(value)
-        super(DotDict, self).__setitem__(key, value)
+        if '.' not in dottedkey:
+            return super(DotDict, self).__setitem__(dottedkey, value)
+        key, dottedkey = dottedkey.split('.', 1)
+        target = self[key] = self.get(key, DotDict())
+        target[dottedkey] = value
 
     def __getattr__(self, attr):
         if attr in self:
             return self[attr]
         raise AttributeError
+
+    def __getitem__(self, dottedkey):
+        if '.' not in dottedkey:
+            return super(DotDict, self).__getitem__(dottedkey)
+        key, dottedkey = dottedkey.split('.', 1)
+        target = super(DotDict, self).__getitem__(key)
+        return target[dottedkey]
 
     def setdefault(self, key, default=None):
         default = self._convert_item(default)
@@ -32,10 +47,12 @@ class DotDict(dict):
         super(DotDict, self).update(converted)
 
     def _convert_item(self, obj):
-        '''Convert obj into a DotDict, or list of DotDict.
+        """
+        Convert obj into a DotDict, or list of DotDict.
+
         Directly nested lists aren't supported.
         Returns the result
-        '''
+        """
         if isinstance(obj, dict) and not isinstance(obj, DotDict):
             obj = DotDict(obj)
         elif isinstance(obj, list):
@@ -51,18 +68,24 @@ class DotDict(dict):
 
 
 class DeletedValue(object):
-    '''
-    A placeholder value that results in the deletion of any existing value or
-    subtree.
-    '''
+
+    """
+    A DotDict value that instructs merging to remove the config key.
+
+    When used as a placeholder, any exisiting value and tree will be removed
+    as well as the key DeletedValue() is assigned to.
+    """
 
 
 class MissingValue(object):
-    '''
+
+    """
     A placeholder value that must be replaced before serialising to JSON.
+
     Only subkey accesses can be caught by the methods below, but the JSON
     serialiazer will fail if it finds one of these objects.
-    '''
+    """
+
     def __init__(self, name=None):
         self.name = name
 
@@ -76,13 +99,13 @@ class MissingValue(object):
 
 
 def merge_dicts(d1, d2, _path=None):
-    '''
+    """
     Merge dictionary d2 into d1, overriding entries in d1 with values from d2.
 
     d1 is mutated.
 
     _path is for internal, recursive use.
-    '''
+    """
     if _path is None:
         _path = ()
     if isinstance(d1, dict) and isinstance(d2, dict):
@@ -116,3 +139,11 @@ def merge_dicts(d1, d2, _path=None):
         raise TypeError('Cannot merge a %s with a %s' % (type(d1), type(d2)))
 
     return d1
+
+
+def filter_dict(unfiltered, filter_keys):
+    """Return a subset of a dictionary using the specified keys."""
+    filtered = DotDict()
+    for k in filter_keys:
+        filtered[k] = unfiltered[k]
+    return filtered
