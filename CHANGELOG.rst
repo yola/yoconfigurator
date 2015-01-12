@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.4.6
+-----
+
+* Add support for public configuration.
+
 0.4.5
 -----
 
