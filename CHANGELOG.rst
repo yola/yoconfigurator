@@ -5,6 +5,7 @@ Change Log
 -----
 
 * Add support for public configuration.
+* Add DotDict support for getting & setting values using dotted keys
 
 0.4.5
 -----
