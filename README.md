@@ -25,8 +25,9 @@ from the application.
 
 ## Public configuration
 
-If it is necessary to share configuration with non-privledged sources
-(example: publishing API urls), a publicly consumable configuration is required.
+If it is necessary to share configuration with non-privledged sources, like
+publishing API URLs but not related credentials, a publicly consumable
+configuration is required.
 
 Yoconfigurator will produce `configuration_public.json` if an app has the deploy
 config `public-data.py`. The public data config contains a list of keys that is
