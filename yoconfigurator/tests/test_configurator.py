@@ -23,7 +23,8 @@ class TestConfigurator(unittest.TestCase):
             'PYTHONPATH': ':'.join(sys.path),
         }
         p = subprocess.Popen(
-            (script_path, '--app-dir', self.app_dir, 'myapp', 'myenv'),
+            (script_path, '--app-dir', self.app_dir, '--configs-dir', '.',
+             'myapp', 'myenv'),
             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, env=env)
         out, err = p.communicate()
