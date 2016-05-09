@@ -20,7 +20,7 @@ else:
 class DetectMissingEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, MissingValue):
-            raise ValueError("Missing Value found in config: %s" % obj.name)
+            raise ValueError('Missing Value found in config: %s' % obj.name)
         return super(DetectMissingEncoder, self).default(obj)
 
 

@@ -101,10 +101,10 @@ class MissingValue(object):
         self.name = name
 
     def __getattr__(self, k):
-        raise AttributeError("No value provided for %s" % self.name)
+        raise AttributeError('No value provided for %s' % self.name)
 
     def get(self, k, default=None):
-        raise KeyError("No value provided for %s" % self.name)
+        raise KeyError('No value provided for %s' % self.name)
 
     __getitem__ = get
 
