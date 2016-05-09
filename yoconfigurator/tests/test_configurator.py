@@ -2,8 +2,7 @@ import json
 import os
 import subprocess
 import sys
-
-from yoconfigurator.tests import unittest
+import unittest
 
 
 class TestConfigurator(unittest.TestCase):

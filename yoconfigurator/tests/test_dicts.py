@@ -1,8 +1,8 @@
 import copy
+import unittest
 
 from yoconfigurator.dicts import (DeletedValue, DotDict, MissingValue,
                                   filter_dict, merge_dicts)
-from yoconfigurator.tests import unittest
 
 
 class DotDictTestCase(unittest.TestCase):

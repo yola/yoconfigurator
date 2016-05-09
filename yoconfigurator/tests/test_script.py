@@ -1,8 +1,7 @@
 import os
 import subprocess
 import sys
-
-from . import unittest
+import unittest
 
 
 class TestScript(unittest.TestCase):
