@@ -17,4 +17,4 @@ class TestScript(unittest.TestCase):
                              stderr=subprocess.PIPE, env=env)
         out, err = p.communicate()
         self.assertEqual(p.wait(), 0)
-        self.assertEqual(err, '')
+        self.assertEqual(err, b'')

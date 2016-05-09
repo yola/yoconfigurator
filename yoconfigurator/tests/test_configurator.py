@@ -28,7 +28,7 @@ class TestConfigurator(unittest.TestCase):
             stderr=subprocess.PIPE, env=env)
         out, err = p.communicate()
         self.assertEqual(p.wait(), 0)
-        self.assertEqual(err, '')
+        self.assertEqual(err, b'')
 
     def tearDown(self):
         os.remove(self.pub_conf)
