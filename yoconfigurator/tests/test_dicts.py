@@ -6,12 +6,6 @@ from yoconfigurator.dicts import (DeletedValue, DotDict, MissingValue,
 
 
 class DotDictTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # Python < 2.7 compatibility:
-        if not hasattr(cls, 'assertIsInstance'):
-            cls.assertIsInstance = lambda self, a, b: self.assertTrue(
-                isinstance(a, b))
 
     def test_create(self):
         'ensure that we support all dict creation methods'
