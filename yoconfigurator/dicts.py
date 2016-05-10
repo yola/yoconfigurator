@@ -1,16 +1,5 @@
 """Module for DotDict data structure and DotDict helpers."""
 
-try:
-    dict.iteritems
-except AttributeError:
-    # Python 3
-    def iteritems(d):
-        return iter(d.items())
-else:
-    # Python 2
-    def iteritems(d):
-        return d.iteritems()
-
 
 class DotDict(dict):
 
@@ -26,7 +15,7 @@ class DotDict(dict):
 
     def __init__(self, *args, **kwargs):
         super(DotDict, self).__init__(*args, **kwargs)
-        for key, value in iteritems(self):
+        for key, value in self.items():
             self[key] = self._convert_item(value)
 
     def __setitem__(self, dottedkey, value):
@@ -120,7 +109,7 @@ def merge_dicts(d1, d2, _path=None):
     if _path is None:
         _path = ()
     if isinstance(d1, dict) and isinstance(d2, dict):
-        for k, v in iteritems(d2):
+        for k, v in d2.items():
             if isinstance(v, MissingValue) and v.name is None:
                 v.name = '.'.join(_path + (k,))
 
