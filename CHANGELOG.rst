@@ -5,6 +5,7 @@ Dev
 -----
 
 * Update to work with Python 2.7, 3.2, 3.3, 3.4, 3.5
+* Drop support for Python <= 2.6
 
 0.4.6
 -----
