@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 
-import sys
-
 from setuptools import setup, find_packages
 
-install_requires = []
-if sys.version_info < (2, 7):
-    install_requires.append('argparse')
 
 setup(
     name='yoconfigurator',
@@ -18,6 +13,21 @@ setup(
     version='0.4.6',
     packages=find_packages(),
     scripts=['bin/configurator.py'],
-    install_requires=install_requires,
     test_suite='yoconfigurator.tests',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Topic :: Utilities',
+    ]
 )

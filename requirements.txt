@@ -1,3 +1,0 @@
-# Only for tests on Python < 2.7:
-argparse
-unittest2

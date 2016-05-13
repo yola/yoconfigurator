@@ -1,13 +1,12 @@
 import json
 import os
 import shutil
+import unittest
 from tempfile import mkdtemp
 
 from ..dicts import MissingValue
 from ..smush import (config_sources, available_sources, smush_config,
                      LenientJSONEncoder)
-
-from . import unittest
 
 
 class TestLenientJSONEncoder(unittest.TestCase):

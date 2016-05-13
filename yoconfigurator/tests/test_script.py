@@ -1,8 +1,7 @@
 import os
 import subprocess
 import sys
-
-from . import unittest
+import unittest
 
 
 class TestScript(unittest.TestCase):
@@ -18,4 +17,4 @@ class TestScript(unittest.TestCase):
                              stderr=subprocess.PIPE, env=env)
         out, err = p.communicate()
         self.assertEqual(p.wait(), 0)
-        self.assertEqual(err, '')
+        self.assertEqual(err, b'')

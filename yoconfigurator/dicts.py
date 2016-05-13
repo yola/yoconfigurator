@@ -15,7 +15,7 @@ class DotDict(dict):
 
     def __init__(self, *args, **kwargs):
         super(DotDict, self).__init__(*args, **kwargs)
-        for key, value in self.iteritems():
+        for key, value in self.items():
             self[key] = self._convert_item(value)
 
     def __setitem__(self, dottedkey, value):
@@ -90,10 +90,10 @@ class MissingValue(object):
         self.name = name
 
     def __getattr__(self, k):
-        raise AttributeError("No value provided for %s" % self.name)
+        raise AttributeError('No value provided for %s' % self.name)
 
     def get(self, k, default=None):
-        raise KeyError("No value provided for %s" % self.name)
+        raise KeyError('No value provided for %s' % self.name)
 
     __getitem__ = get
 
@@ -109,7 +109,7 @@ def merge_dicts(d1, d2, _path=None):
     if _path is None:
         _path = ()
     if isinstance(d1, dict) and isinstance(d2, dict):
-        for k, v in d2.iteritems():
+        for k, v in d2.items():
             if isinstance(v, MissingValue) and v.name is None:
                 v.name = '.'.join(_path + (k,))
 

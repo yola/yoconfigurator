@@ -1,15 +1,26 @@
-import imp
 import json
 import os
+import types
 import sys
 
 from yoconfigurator.dicts import DotDict, MissingValue
+
+try:
+    # SourceFileLoader added in Python 3.3
+    from importlib.machinery import SourceFileLoader
+except ImportError:
+    # imp.load_source deprecated in Python 3.3
+    from imp import load_source
+    _load_module = load_source
+else:
+    def _load_module(module_name, file_name):
+         return SourceFileLoader(module_name, file_name).load_module()
 
 
 class DetectMissingEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, MissingValue):
-            raise ValueError("Missing Value found in config: %s" % obj.name)
+            raise ValueError('Missing Value found in config: %s' % obj.name)
         return super(DetectMissingEncoder, self).default(obj)
 
 
@@ -32,7 +43,7 @@ def get_config_module(config_pathname):
     """Imports the config file to yoconfigurator.configs.<config_basename>."""
     configs_mod = 'yoconfigurator.configs'
     if configs_mod not in sys.modules:
-        sys.modules[configs_mod] = imp.new_module(configs_mod)
-    module_name = os.path.basename(config_pathname).rsplit('.', 1)[-1]
+        sys.modules[configs_mod] = types.ModuleType(configs_mod)
+    module_name = os.path.basename(config_pathname).rsplit('.', 1)[0]
     module_name = configs_mod + '.' + module_name
-    return imp.load_source(module_name, config_pathname)
+    return _load_module(module_name, config_pathname)

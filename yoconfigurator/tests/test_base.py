@@ -1,12 +1,11 @@
 import json
 import os
 import shutil
+import unittest
 from tempfile import mkdtemp
 
 from ..base import DetectMissingEncoder, read_config, write_config
 from ..dicts import merge_dicts, MissingValue
-
-from . import unittest
 
 
 class TestDetectMissingEncoder(unittest.TestCase):

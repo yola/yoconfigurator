@@ -2,8 +2,7 @@ import json
 import os
 import subprocess
 import sys
-
-from yoconfigurator.tests import unittest
+import unittest
 
 
 class TestConfigurator(unittest.TestCase):
@@ -29,7 +28,7 @@ class TestConfigurator(unittest.TestCase):
             stderr=subprocess.PIPE, env=env)
         out, err = p.communicate()
         self.assertEqual(p.wait(), 0)
-        self.assertEqual(err, '')
+        self.assertEqual(err, b'')
 
     def tearDown(self):
         os.remove(self.pub_conf)
@@ -43,24 +42,24 @@ class TestConfigurator(unittest.TestCase):
 
     def test_creates_a_config_that_looks_as_expected(self):
         expected = {
-            "yoconfigurator": {
-                "app": "myapp"
+            'yoconfigurator': {
+                'app': 'myapp'
             },
-            "myapp": {
-                "secret": "sauce",
-                "some": {
-                    "deeply": {
-                        "nested": {
-                            "value": "Stefano likes beer"
+            'myapp': {
+                'secret': 'sauce',
+                'some': {
+                    'deeply': {
+                        'nested': {
+                            'value': 'Stefano likes beer'
                         }
                     }
                 },
-                "hello": "world",
-                "oz": {
-                    "bears": True,
-                    "tigers": True,
-                    "lions": True,
-                    "zebras": False
+                'hello': 'world',
+                'oz': {
+                    'bears': True,
+                    'tigers': True,
+                    'lions': True,
+                    'zebras': False
                 }
             }
         }
