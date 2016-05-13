@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Dev
+0.5.0
 -----
 
 * Update to work with Python 2.7, 3.2, 3.3, 3.4, 3.5
