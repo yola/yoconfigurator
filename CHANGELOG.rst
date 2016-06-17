@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-DEV
+0.5.1
 -----
 
 * Fix `DotDict.setdefault()` to return value (previously it always
