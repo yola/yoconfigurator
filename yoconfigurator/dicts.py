@@ -40,7 +40,7 @@ class DotDict(dict):
 
     def setdefault(self, key, default=None):
         default = self._convert_item(default)
-        super(DotDict, self).setdefault(key, default)
+        return super(DotDict, self).setdefault(key, default)
 
     def update(self, *args, **kwargs):
         converted = DotDict(*args, **kwargs)
