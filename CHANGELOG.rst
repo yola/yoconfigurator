@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+DEV
+-----
+
+* Fix `DotDict.setdefault()` to return value (previously it always
+  returned None)
+
 0.5.0
 -----
 
