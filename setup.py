@@ -10,7 +10,7 @@ setup(
     author_email='engineers@yola.com',
     license='MIT (Expat)',
     url='https://github.com/yola/yoconfigurator',
-    version='0.5.1',
+    version='0.5.2',
     packages=find_packages(),
     scripts=['bin/configurator.py'],
     test_suite='yoconfigurator.tests',

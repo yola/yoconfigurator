@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.5.2
+-----
+
+* Fix `seeded_auth_token` to accept arguments of `str` type
+
 0.5.1
 -----
 
